@@ -1,0 +1,25 @@
+{
+  "description": "Library Class Library",
+  "projectUrl": "",
+  "licenseUrl": "",
+  "dependencies": {
+    "System.Collections": "4.0.10-*",
+    "System.Linq": "4.0.0-*",
+    "System.Threading": "4.0.10-*",
+    "System.Runtime": "4.0.20-*"
+  },
+  "compilationOptions": {
+    "define": [
+      "DEBUG",
+      "TRACE"
+    ]
+  },
+  "frameworks": {
+    "dnx451": {},
+    "dnxcore50": {
+      "dependencies": {
+        "System.Runtime.Extensions": "4.0.10-beta-23019"
+      }
+    }
+  }
+}

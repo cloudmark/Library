@@ -1,0 +1,69 @@
+{
+    "version": "1.0.0-*",
+    "webroot": "wwwroot",
+    "exclude": [
+        "wwwroot",
+        "bower_components",
+        "node_modules",
+        "grunt"
+    ],
+    "packExclude": [
+        "bower.json",
+        "package.json",
+        "gruntfile.js",
+        "bower_components",
+        "node_modules",
+        "grunt"
+    ],
+    "authors": [
+        "Mark Galea"
+    ],
+    "description": "Library Single Page Application",
+    "compilationOptions": {
+        "define": [
+            "DEBUG",
+            "TRACE"
+        ]
+    },
+    "dependencies": {
+        "EntityFramework.SqlServer": "7.0.0-beta5",
+        "EntityFramework.InMemory": "7.0.0-beta5",
+        "Kestrel": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.Facebook": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.Google": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.MicrosoftAccount": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.OpenIdConnect": "1.0.0-beta5",
+        "Microsoft.AspNet.Authentication.Twitter": "1.0.0-beta5",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-beta5",
+        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta5",
+        "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta5",
+        "Microsoft.AspNet.Mvc": "6.0.0-beta5",
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
+        "Microsoft.AspNet.Session": "1.0.0-beta5",
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-beta5",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-beta5",
+        "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta5",
+        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+        "Microsoft.Framework.Logging.Console": "1.0.0-beta5",
+        "AutoMapper": "4.0.0-ci1026",
+        "Library": ""
+    },
+    "commands": {
+        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",
+        "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5004"
+    },
+    "frameworks": {
+        "dnx451": {
+            "dependencies": {
+                "Library": ""
+            }
+        },
+        "dnxcore50": {
+            "dependencies": {
+                "Library": ""
+            }
+        }
+    }
+}
