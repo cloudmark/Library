@@ -1789,16 +1789,16 @@
         }
       },
       "System.Runtime/4.0.20.0": {},
-      "System.Threading/4.0.10-beta-23019": {
+      "System.Threading/4.0.10-beta-23029": {
         "dependencies": {
-          "System.Runtime": "4.0.0-beta-23019",
-          "System.Threading.Tasks": "4.0.0-beta-23019"
+          "System.Runtime": "4.0.0-beta-23029",
+          "System.Threading.Tasks": "4.0.0-beta-23029"
         },
         "compile": {
           "ref/dotnet/System.Threading.dll": {}
         }
       },
-      "System.Threading.Tasks/4.0.0-beta-23019": {}
+      "System.Threading.Tasks/4.0.0-beta-23029": {}
     },
     "DNXCore,Version=v5.0": {
       "AutoMapper/4.0.0-ci1026": {
@@ -4545,10 +4545,10 @@
           "lib/dotnet/System.Text.RegularExpressions.dll": {}
         }
       },
-      "System.Threading/4.0.10-beta-23019": {
+      "System.Threading/4.0.10-beta-23029": {
         "dependencies": {
-          "System.Runtime": "4.0.0-beta-23019",
-          "System.Threading.Tasks": "4.0.0-beta-23019"
+          "System.Runtime": "4.0.0-beta-23029",
+          "System.Threading.Tasks": "4.0.0-beta-23029"
         },
         "compile": {
           "ref/dotnet/System.Threading.dll": {}
@@ -7059,16 +7059,27 @@
         "ref/net46/_._"
       ]
     },
-    "System.Threading/4.0.10-beta-23019": {
-      "sha512": "ss8p5o4C+f+rjpq0hxrcFsRXGUF+ojzjsW9MKfLrAqTuXhQywwDAPiTEvvEmDG8ptpwfQHWR09jlhcBNFhkG6w==",
+    "System.Threading/4.0.10-beta-23029": {
+      "serviceable": true,
+      "sha512": "5/D7m6GOkJyvSezIVTrIZ/Y+aP98TyCRwNzkTikev0UI779HUCxUfj3xALEUQ37k1mHTcbq5Ep4rfI8Gk9igIg==",
       "files": [
-        "System.Threading.4.0.10-beta-23019.nupkg",
-        "System.Threading.4.0.10-beta-23019.nupkg.sha512",
+        "System.Threading.4.0.10-beta-23029.nupkg",
+        "System.Threading.4.0.10-beta-23029.nupkg.sha512",
         "System.Threading.nuspec",
         "lib/DNXCore50/System.Threading.dll",
         "lib/net46/_._",
         "lib/netcore50/System.Threading.dll",
         "ref/dotnet/System.Threading.dll",
+        "ref/dotnet/System.Threading.xml",
+        "ref/dotnet/de/System.Threading.xml",
+        "ref/dotnet/es/System.Threading.xml",
+        "ref/dotnet/fr/System.Threading.xml",
+        "ref/dotnet/it/System.Threading.xml",
+        "ref/dotnet/ja/System.Threading.xml",
+        "ref/dotnet/ko/System.Threading.xml",
+        "ref/dotnet/ru/System.Threading.xml",
+        "ref/dotnet/zh-hans/System.Threading.xml",
+        "ref/dotnet/zh-hant/System.Threading.xml",
         "ref/net46/_._",
         "runtimes/win8-aot/lib/netcore50/System.Threading.dll"
       ]
@@ -7086,19 +7097,43 @@
         "ref/net46/System.Threading.Overlapped.dll"
       ]
     },
-    "System.Threading.Tasks/4.0.0-beta-23019": {
-      "sha512": "y3+puoROfucGrjJkHwvSu0BsoBvFFzFWnJvTbQnM20qgKZsH8NMPTUBEOHa/gNilkc8fTGsM7sX3Iug/QiM0Xg==",
+    "System.Threading.Tasks/4.0.0-beta-23029": {
+      "sha512": "OtsGAec8VUXVAdp/7YVUBY/ytHH4F8XMWOFYCHYjmwdH+Cm1yCEHyiGSfZQ8DmIbU3IQLOmFAZfhtGD0eFwa8w==",
       "files": [
         "License.rtf",
-        "System.Threading.Tasks.4.0.0-beta-23019.nupkg",
-        "System.Threading.Tasks.4.0.0-beta-23019.nupkg.sha512",
+        "System.Threading.Tasks.4.0.0-beta-23029.nupkg",
+        "System.Threading.Tasks.4.0.0-beta-23029.nupkg.sha512",
         "System.Threading.Tasks.nuspec",
         "lib/net45/_._",
         "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
         "ref/dotnet/System.Threading.Tasks.dll",
+        "ref/dotnet/System.Threading.Tasks.xml",
+        "ref/dotnet/de/System.Threading.Tasks.xml",
+        "ref/dotnet/es/System.Threading.Tasks.xml",
+        "ref/dotnet/fr/System.Threading.Tasks.xml",
+        "ref/dotnet/it/System.Threading.Tasks.xml",
+        "ref/dotnet/ja/System.Threading.Tasks.xml",
+        "ref/dotnet/ko/System.Threading.Tasks.xml",
+        "ref/dotnet/ru/System.Threading.Tasks.xml",
+        "ref/dotnet/zh-hans/System.Threading.Tasks.xml",
+        "ref/dotnet/zh-hant/System.Threading.Tasks.xml",
         "ref/net45/_._",
         "ref/netcore50/System.Threading.Tasks.dll",
-        "ref/win8/_._"
+        "ref/netcore50/System.Threading.Tasks.xml",
+        "ref/netcore50/de/System.Threading.Tasks.xml",
+        "ref/netcore50/es/System.Threading.Tasks.xml",
+        "ref/netcore50/fr/System.Threading.Tasks.xml",
+        "ref/netcore50/it/System.Threading.Tasks.xml",
+        "ref/netcore50/ja/System.Threading.Tasks.xml",
+        "ref/netcore50/ko/System.Threading.Tasks.xml",
+        "ref/netcore50/ru/System.Threading.Tasks.xml",
+        "ref/netcore50/zh-hans/System.Threading.Tasks.xml",
+        "ref/netcore50/zh-hant/System.Threading.Tasks.xml",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._"
       ]
     },
     "System.Threading.Tasks/4.0.10-beta-23019": {

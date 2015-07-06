@@ -1,0 +1,3 @@
+/// <reference path="../UrlResolver/UrlResolverService.ts" />
+/// <reference path="../Models/IBook.ts" />
+/// <reference path="../Models/IPagedList.ts"/>
