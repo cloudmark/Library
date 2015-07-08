@@ -3,7 +3,7 @@ using Microsoft.AspNet.Mvc;
 using Library.Models; 
 
 namespace Library.Apis {
-	[Route("api/loans")]
+	[Route("api/loan")]
 	public class LoanApiController: Controller{
 		private readonly LibraryContext _libraryContext;
 		

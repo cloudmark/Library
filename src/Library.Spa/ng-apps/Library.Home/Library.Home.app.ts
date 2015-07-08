@@ -1,9 +1,10 @@
 /// <reference path="../references.ts" />
 module Library.Home {
-	var dependencies = [
-		"ngRoute",
-        Library.UrlResolver,
-        Library.Services
+    var dependencies = [
+        "ngRoute",
+		Library.UrlResolver,
+        Library.Services,
+        Library.Home.Book
 	];
 
 	// Use this method to register work which needs to be performed on module loading.
@@ -14,7 +15,13 @@ module Library.Home {
         $logProvider.debugEnabled(true);
 
         $routeProvider
-            .when("/", { templateUrl: "ng-apps/MusicStore.Store/Home/Home.html" })
+            .when("/", { templateUrl: "ng-apps/Library.Home/Home/Home.html" })
+            .when("/book", { templateUrl: "ng-apps/Library.Home/Book/Book.html" })
+            .when("/loan", { templateUrl:"ng-apps/Library.Home/Loan/Loan.html" })
+            .when("/user", { templateUrl: "ng-apps/Library.Home/User/User.html" })
+
+            
+            // .when("/user/:albumId", { templateUrl: "ng-apps/MusicStore.Store/Catalog/AlbumDetails.html" })
             .otherwise({ redirectTo: "/" });
     }
 

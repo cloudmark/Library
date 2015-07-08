@@ -5,12 +5,9 @@ using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Framework.Caching.Memory;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
 using Library.Models;
-using Library.Apis; 
 using Library.Dtos;
 using AutoMapper;
 
@@ -82,6 +79,7 @@ namespace Library.Spa
 
             // Add MVC
             app.UseMvc();
+
         }
     }
 
