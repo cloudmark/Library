@@ -1,43 +1,82 @@
 using System;
-using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
-using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Library.Models;
 using Library.Dtos;
 using AutoMapper;
+using Microsoft.AspNet.Hosting;
+using Microsoft.Framework.Configuration;
+using Microsoft.Framework.Runtime;
+using MusicStore.Spa;
+using Spa.Extensions.Extenstions;
 
 namespace Library.Spa
 {
     public class Startup
     {
-        public Startup()
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            // .AddJsonFile("Config.json")
-            Configuration = new Configuration().AddEnvironmentVariables();
+            var configurationBuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+               .AddJsonFile("Config.json")
+               .AddEnvironmentVariables();
+            Configuration = configurationBuilder.Build();
         }
 
-        public Microsoft.Framework.ConfigurationModel.IConfiguration Configuration { get; set; }
+        public Microsoft.Framework.Configuration.IConfiguration Configuration { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<SiteSettings>(settings =>
+            {
+                settings.DefaultAdminUsername = Configuration.Get("DefaultAdminUsername");
+                settings.DefaultAdminPassword = Configuration.Get("DefaultAdminPassword");
+            });
+
+
             // Add the Mvc
             services.AddMvc();
 
-            // Add the Context; 
-            services.AddSingleton<LibraryContext>();
-            
-            
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<LibraryContext>(options =>
+                {
+                    if (Type.GetType("Mono.Runtime") != null)
+                    {
+                        Console.WriteLine("Detected Linux/Mac Runtime. ");
+                        options.UseInMemoryStore();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Detected Windows Runtime. ");
+                        options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString"));
+                    }
+                });
+
+
+            // Add Identity services to the services container
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<LibraryContext>()
+                    .AddDefaultTokenProviders();
+
+            // Configure Auth
+            //            services.Configure<AuthorizationOptions>(options =>
+            //            {
+            //                options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
+            //            });
+
+
             // Configure the mapper
-            Mapper.CreateMap<BookChangeDto, Book>();      
+            Mapper.CreateMap<BookChangeDto, Book>();
+
         }
 
         public void Configure(IApplicationBuilder app)
         {
+
             // Add the runtime information page that can be used by developers
             // to see what packages are used by the application
             // default path is: /runtimeinfo
@@ -46,39 +85,17 @@ namespace Library.Spa
             // Show all errors; 
             app.UseErrorPage(ErrorPageOptions.ShowAll);
 
-            //Are we ruuning on Mono?
-            var useInMemoryStore = Type.GetType("Mono.Runtime") != null;
-
-            if (useInMemoryStore)
-            {
-                System.Console.WriteLine("=================================================");
-                System.Console.WriteLine("Running on Mac or Linux");
-                System.Console.WriteLine("=================================================");
-
-            }
-            else
-            {
-                System.Console.WriteLine("=================================================");
-                System.Console.WriteLine("Running on Windows ");
-                System.Console.WriteLine("=================================================");
-            }
-
             // Initialize the sample data
-            var libraryContext = app.ApplicationServices.GetService<LibraryContext>();
-            SampleData.InitializeLibraryDatabase(libraryContext);
-            System.Console.WriteLine("=================================================");
-            foreach (var loan in libraryContext.Loans)
-            {
-                System.Console.WriteLine($"[Book {loan.Book.Id}:{loan.Book.Name}] -> [User {loan.User.Id}:{loan.User.Name}] ");
-            }
-            System.Console.WriteLine("=================================================");
-            System.Console.WriteLine(libraryContext.GetHashCode());    
+            SampleData.InitializeLibraryDatabaseAsync(app.ApplicationServices).Wait();
 
             // Add static files
             app.UseStaticFiles();
 
             // Add MVC
             app.UseMvc();
+
+            // Add SPA
+            app.UseSpa(new SpaOptions() {DebugMode = true}); 
 
         }
     }

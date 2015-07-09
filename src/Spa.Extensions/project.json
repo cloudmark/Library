@@ -1,0 +1,29 @@
+{
+    "version": "1.0.0-*",
+    "webroot": "wwwroot",
+    "exclude": [
+        "wwwroot",
+        "bower_components",
+        "node_modules",
+        "grunt"
+    ],
+    "packExclude": [
+        "bower.json",
+        "package.json",
+        "gruntfile.js",
+        "bower_components",
+        "node_modules",
+        "grunt"
+    ],
+    "authors": [
+        "Mark Galea"
+    ],
+    "description": "Single Page Application Extensions",
+    "dependencies": {
+        "Microsoft.AspNet.Mvc": "6.0.0-beta5"
+    },
+    "frameworks": {
+        "dnx451": {},
+        "dnxcore50": {}
+    }
+}

@@ -1,54 +1,105 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Relational;
+using Microsoft.Data.Entity.SqlServer;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Library.Models
 {
     public static class SampleData
     {
-        public static void InitializeLibraryDatabase(LibraryContext libraryContext)
+
+        public static async Task InitializeLibraryDatabaseAsync(IServiceProvider serviceProvider)
         {
-            var r = new Random();
-            // Create the books.  
-            libraryContext.Books =
-                new List<Book> {
-                    new Book { Name="An Imperial Affliction", Description="Description"},
-                    new Book { Name="The Curious Incident Of The Dog In the Night Time", Description="Description"},
-                    new Book { Name="The Fault In Our Stars", Description="Description"},
-                    new Book { Name="Women", Description="Description"},
-                    new Book { Name="An Eternal Golden Braid", Description="Description"},
-                };
-            // Create the Id's
-            int i = 0; foreach (var book in libraryContext.Books) book.Id = i++;
 
-            // Create the users; 
-            libraryContext.Users =
-                new List<User>{
-                    new User{Id = 1, Name = "Mark", Surname = "Galea"},
-                    new User{Id = 1, Name = "John", Surname = "Doe"},
-                    new User{Id = 1, Name = "William", Surname = "Smith"},
-                    new User{Id = 1, Name = "Kyle", Surname = "Brown"},
-                    new User{Id = 1, Name = "Sam", Surname = "Harris"},
-            };
-            int j = 0; foreach (var user in libraryContext.Users) user.Id = j++;
-
-            // Create the loans; 
-            libraryContext.Loans = Enumerable.Range(0, libraryContext.Books.Count()).Select(
-                x =>
+            using (var db = serviceProvider.GetService<LibraryContext>())
+            {
+                var sqlServerDatabase = db.Database as RelationalDatabase;
+                if (sqlServerDatabase != null)
                 {
-                    // Get Random Book
-                    var books = libraryContext.Books;
-                    var book = books.ElementAt(x);
-
-                    // Get Random User; 
-                    var users = libraryContext.Users;
-                    var user = users.ElementAt(r.Next(0, users.Count() - 1));
-
-                    // Generate Loan
-                    return new Loan { Id = x, Book = book, User = user };
+                    // Create the database.  
+                    if (await sqlServerDatabase.EnsureCreatedAsync())
+                    {
+                        await InsertUsers(serviceProvider);
+                        await InsertBooks(serviceProvider);
+                        //await InsertLoans(serviceProvider);
+                    }
                 }
-            ).ToList();
-
+                else
+                {
+                    await InsertUsers(serviceProvider);
+                    await InsertBooks(serviceProvider);
+                    //await InsertLoans(serviceProvider);
+                }
+            }
         }
+
+        private static async Task InsertUsers(IServiceProvider serviceProvider)
+        {
+            await AddOrUpdateAsync<User>(serviceProvider, g => g.Id, GetUsers());
+        }
+
+
+        private static async Task InsertBooks(IServiceProvider serviceProvider)
+        {
+            await AddOrUpdateAsync<Book>(serviceProvider, g => g.Id, GetBooks());
+        }
+
+        private static async Task AddOrUpdateAsync<TEntity>(
+            IServiceProvider serviceProvider,
+            Func<TEntity, object> propertyToMatch, IEnumerable<TEntity> entities)
+            where TEntity : class
+        {
+            // Query in a separate context so that we can attach existing entities as modified
+            List<TEntity> existingData;
+            using (var db = serviceProvider.GetService<LibraryContext>())
+            {
+                existingData = db.Set<TEntity>().ToList();
+            }
+
+            using (var db = serviceProvider.GetService<LibraryContext>())
+            {
+                foreach (var item in entities)
+                {
+                    db.Entry(item).State = existingData.Any(g => propertyToMatch(g).Equals(propertyToMatch(item)))
+                        ? EntityState.Modified
+                        : EntityState.Added;
+                }
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        private static Book[] GetBooks()
+        {
+            return new Book[]
+            {
+                new Book {Name = "An Imperial Affliction", Description = "Description"},
+                new Book {Name = "The Curious Incident Of The Dog In the Night Time", Description = "Description"},
+                new Book {Name = "The Fault In Our Stars", Description = "Description"},
+                new Book {Name = "Women", Description = "Description"},
+                new Book {Name = "An Eternal Golden Braid", Description = "Description"},
+
+            };
+        }
+
+        private static User[] GetUsers()
+        {
+            return new User[] {
+                new User{Name = "Mark", Surname = "Galea"},
+                new User{Name = "John", Surname = "Doe"},
+                new User{Name = "William", Surname = "Smith"},
+                new User{Name = "Kyle", Surname = "Brown"},
+                new User{Name = "Sam", Surname = "Harris"},
+            };
+        }
+
+       
     }
 }
