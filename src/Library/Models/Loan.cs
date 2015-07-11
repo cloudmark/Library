@@ -6,7 +6,8 @@ namespace Library.Models {
         public int Id {get; set; }
         public Book Book {get; set; }
         public User User {get; set; }
-        public DateTime DateTime {get; set; }	
+        public DateTime LoanStart {get; set; }
+        public DateTime LoanEnd { get; set; }
 
-	}
+    }
 }

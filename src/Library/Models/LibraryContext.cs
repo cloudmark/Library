@@ -12,6 +12,7 @@ namespace Library.Models
     public class LibraryContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<User> LibraryUsers { get; set; }
+        public DbSet<BookRequest> BookRequests { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
@@ -33,15 +34,24 @@ namespace Library.Models
             {
                 book.Property(b => b.Id).Column("BookId").GenerateValueOnAdd();
                 book.Property(b => b.Name).Required();
+                book.Property(b => b.Description).Required();
             });
-            
+
+            builder.Entity<BookRequest>(book =>
+            {
+                book.Property(b => b.Id).Column("BookRequestId").GenerateValueOnAdd();
+                book.Property(b => b.Name).Required();
+                book.Property(b => b.Description).Required();
+            });
+
             // Loan Configuration. 
             builder.Entity<Loan>(loan =>
             {
                 loan.Property(l => l.Id).Column("LoanId").GenerateValueOnAdd();
                 loan.Reference(l => l.Book);
                 loan.Reference(l => l.User);
-                loan.Property(l => l.DateTime).Required();
+                loan.Property(l => l.LoanStart).Required();
+                loan.Property(l => l.LoanEnd).Required();
             });
             
 

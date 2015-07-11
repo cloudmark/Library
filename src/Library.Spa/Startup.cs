@@ -5,8 +5,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.DependencyInjection;
 using Library.Models;
-using Library.Dtos;
 using AutoMapper;
+using Library.Services;
+using Library.Spa.Dtos;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
@@ -56,7 +57,6 @@ namespace Library.Spa
                     }
                 });
 
-
             // Add Identity services to the services container
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<LibraryContext>()
@@ -68,9 +68,16 @@ namespace Library.Spa
             //                options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
             //            });
 
+            // Create the services
+            services.AddSingleton<IBookService, BookService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<ILoanService, LoanService>();
 
             // Configure the mapper
+            Mapper.CreateMap<Book, BookResultDto>();
+            Mapper.CreateMap<Book, BookDetailedResultDto>(); 
             Mapper.CreateMap<BookChangeDto, Book>();
+
 
         }
 

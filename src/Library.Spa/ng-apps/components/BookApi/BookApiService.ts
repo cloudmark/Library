@@ -2,7 +2,8 @@
 
 module Library.Services {
 	export interface IBookApiService {
-		getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
+        getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
+        requestBook(book: Models.IBook): ng.IPromise<Models.IBook>; 
 	}
 
     class BookApiService implements IBookApiService {
@@ -22,11 +23,9 @@ module Library.Services {
         }
 
         public getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>> {
-            var url = this._urlResolver.resolveUrl("~/api/books"),
-                query: any = {},
-                querySeparator = "?",
-                inlineData;
-
+            var url = this._urlResolver.resolveUrl("~/api/books");
+            var query: any = {};
+            var querySeparator = "?";
             if (page) {
                 query.page = page;
             }
@@ -48,13 +47,18 @@ module Library.Services {
                 }
             }
 
-            inlineData = this._inlineData ? this._inlineData.get(url) : null;
+            var inlineData = this._inlineData ? this._inlineData.get(url) : null;
 
             if (inlineData) {
                 return this._q.when(inlineData);
             } else {
-                return this._http.get(url).then(result => result.data);
+                return this._http.get(url).then(result => result.data.Data); 
             }
+        }
+
+        public requestBook(book: Models.IBook): ng.IPromise<Models.IBook> {
+            var url = this._urlResolver.resolveUrl("~/api/books");
+            return this._http.post(url, book).then(result => result.data.Data);    
         }
 	}
 }

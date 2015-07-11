@@ -1,8 +1,8 @@
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using Library.Models;
 using Microsoft.AspNet.Mvc;
-using Library.Models; 
 
-namespace Library.Apis {
+namespace Library.Spa.Apis {
 	[Route("api/loan")]
 	public class LoanApiController: Controller{
 		private readonly LibraryContext _libraryContext;

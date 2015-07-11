@@ -1,10 +1,104 @@
-﻿<div class="col-md-12">
-    <div ng-controller="Library.Home.Home.HomeController as homeCtrl">
-        <div ng-repeat="item in homeCtrl.books">
-            {{item}}
-        </div>
+﻿<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li class="active">Books</li>
+    </ol>
+</section>
+<section class="content">
+    <div ng-show="loading()" class="alert alert-info" role="alert">Loading Sessions...</div>
+    <div ng-show="error()" class="alert alert-danger" role="alert">
+        Error Connecting. Do you want to <a ng-click="updateSessions()" class="alert-link">retry?</a>
     </div>
 
-    <p>Nothing here {{'yet' + '!'}}</p>
-    <a href="#/">Back </a>
-</div>
+    <div ng-show="!ctrl.loading() && !ctrl.error()" class="row">
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Request Book</h5>
+                </div>
+                <div class="panel-body">
+                    {{requestBookForm.$valid}}
+                    <form id="requestBookForm" ng-submit="ctrl.requestBook()" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="inputNameIdentifier">Name</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Name" class="form-control" id="inputNameIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDescriptionIdentifier">Description</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Description" class="form-control" id="inputDescriptionIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button type="submit" class="btn btn-info">Request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h5>Available Books</h5>
+                </div>
+                <div class="panel-body">
+                    <div ng-hide="ctrl.books.length" class="alert" role="alert">
+                        No Results for your Query. <a ng-click="ctrl.clearFilters()" class="alert-link">Clear Results</a> and try again?
+                    </div>
+                    <table ng-show="ctrl.books.length" class="table table-striped table-condensed table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="book in filteredBooks  = (ctrl.books | filter: {Id: ctrl.filters.Id, Name: ctrl.filters.Name, Description: ctrl.filters.Description}) track by book.Id">
+
+                            <td><a ng-href="/#/book/{{book.Id}}">/{{book.Id}}</a></td>
+                            <td>{{book.Name}}</td>
+                            <td>{{book.Description}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-primary btn-large btn-block btn" data-ng-click="ctrl.refreshBooks()">Refresh</div>
+            <div class="span3">&nbsp;</div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filters</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="inputBookIdentifier">BookId</label>
+                            <input type="text" data-ng-model="ctrl.filters.Id" class="form-control" id="inputBookIdentifier"
+                                   placeholder="Book Identifier">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNameIdentifier">Name</label>
+                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputNameIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDescriptionIdentifier">Description</label>
+                            <input type="text" data-ng-model="ctrl.filters.Description" class="form-control" id="inputDescriptionIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button data-ng-click="ctrl.clearFilters()" type="submit" class="btn btn-info">Clear Filters</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+</section>

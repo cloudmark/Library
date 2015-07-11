@@ -22,7 +22,9 @@ var Library;
                 this._urlResolver = urlResolver;
             }
             BookApiService.prototype.getBooks = function (page, pageSize, sortBy) {
-                var url = this._urlResolver.resolveUrl("~/api/books"), query = {}, querySeparator = "?", inlineData;
+                var url = this._urlResolver.resolveUrl("~/api/books");
+                var query = {};
+                var querySeparator = "?";
                 if (page) {
                     query.page = page;
                 }
@@ -40,13 +42,17 @@ var Library;
                         }
                     }
                 }
-                inlineData = this._inlineData ? this._inlineData.get(url) : null;
+                var inlineData = this._inlineData ? this._inlineData.get(url) : null;
                 if (inlineData) {
                     return this._q.when(inlineData);
                 }
                 else {
-                    return this._http.get(url).then(function (result) { return result.data; });
+                    return this._http.get(url).then(function (result) { return result.data.Data; });
                 }
+            };
+            BookApiService.prototype.requestBook = function (book) {
+                var url = this._urlResolver.resolveUrl("~/api/books");
+                return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
             return BookApiService;
         })();
@@ -74,9 +80,7 @@ var Library;
     (function (UrlResolver) {
         var UrlResolverService = (function () {
             function UrlResolverService($rootElement) {
-                // this._base = $rootElement.attr("data-url-base");
-                // TODO: Fix this to use a template html page so that we can inject properties.  
-                this._base = "http://localhost:5004/";
+                this._base = $rootElement.attr("data-url-base");
                 // Add trailing slash if not present
                 if (this._base === "" || this._base.substr(this._base.length - 1) !== "/") {
                     this._base = this._base + "/";
@@ -126,21 +130,86 @@ var Library;
     (function (Home) {
         var Book;
         (function (Book) {
-            var HomeController = (function () {
-                function HomeController(bookApi) {
-                    var viewModel = this;
-                    bookApi.getBooks().then(function (books) {
-                        viewModel.books = books;
+            var BookController = (function () {
+                function BookController($scope, bookApi) {
+                    this.books = [];
+                    this.filters = {
+                        Id: "",
+                        Name: "",
+                        Description: ""
+                    };
+                    this.currentBook = {
+                        Id: -1,
+                        Name: "",
+                        Description: ""
+                    };
+                    this.$scope = $scope;
+                    this.bookApi = bookApi;
+                    this.refreshBooks();
+                }
+                BookController.prototype.refreshBooks = function () {
+                    var _this = this;
+                    this.bookApi.getBooks().then(function (books) {
+                        _this.books.length = 0;
+                        _this.books.push.apply(_this.books, books);
                     });
+                };
+                BookController.prototype.clearFilters = function () {
+                    this.filters.Id = "";
+                    this.filters.Name = "";
+                    this.filters.Description = "";
+                };
+                BookController.prototype.requestBook = function () {
+                    var _this = this;
+                    debugger;
+                    this.bookApi.requestBook(this.currentBook).then(function (book) {
+                        _this.currentBook = {
+                            Id: -1,
+                            Name: "",
+                            Description: ""
+                        };
+                        _this.books.push.apply(_this.books, [book]);
+                    });
+                };
+                return BookController;
+            })();
+            angular.module("Library.Home.Book")
+                .controller("Library.Home.Book.BookController", [
+                "$scope",
+                "Library.Services.IBookApiService",
+                BookController
+            ]);
+        })(Book = Home.Book || (Home.Book = {}));
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home_1) {
+        var Home;
+        (function (Home) {
+            angular.module("Library.Home.Home", []);
+        })(Home = Home_1.Home || (Home_1.Home = {}));
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+/// <reference path="..\..\Library.Home.Home.ng.ts" />
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home_2) {
+        var Home;
+        (function (Home) {
+            var HomeController = (function () {
+                function HomeController() {
+                    var viewModel = this;
                 }
                 return HomeController;
             })();
-            angular.module("Library.Home.Book")
-                .controller("Library.Home.Book.HomeController", [
-                "Library.Services.IBookApiService",
+            angular.module("Library.Home.Home")
+                .controller("Library.Home.Home.HomeController", [
                 HomeController
             ]);
-        })(Book = Home.Book || (Home.Book = {}));
+        })(Home = Home_2.Home || (Home_2.Home = {}));
     })(Home = Library.Home || (Library.Home = {}));
 })(Library || (Library = {}));
 /// <reference path="../references.ts" />
@@ -152,6 +221,9 @@ var Library;
             "ngRoute",
             "Library.UrlResolver",
             "Library.Services",
+            "Library.Home.Home",
+            "Library.Home.User",
+            "Library.Home.Loan",
             "Library.Home.Book",
         ]).config([
             "$routeProvider",
@@ -166,6 +238,9 @@ var Library;
             "ngRoute",
             Library.UrlResolver,
             Library.Services,
+            Library.Home.Home,
+            Library.Home.User,
+            Library.Home.Loan,
             Library.Home.Book
         ];
         // Use this method to register work which needs to be performed on module loading.
@@ -175,15 +250,94 @@ var Library;
             // TODO: Capture all logged errors and send back to server
             $logProvider.debugEnabled(true);
             $routeProvider
-                .when("/", { templateUrl: "ng-apps/Library.Home/Home/Home.html" })
-                .when("/book", { templateUrl: "ng-apps/Library.Home/Book/Book.html" })
-                .when("/loan", { templateUrl: "ng-apps/Library.Home/Loan/Loan.html" })
-                .when("/user", { templateUrl: "ng-apps/Library.Home/User/User.html" })
+                .when("/", {
+                templateUrl: "ng-apps/Library.Home/Home/Home.html",
+                controller: "Library.Home.Home.HomeController",
+                controllerAs: "ctrl"
+            })
+                .when("/book", {
+                templateUrl: "ng-apps/Library.Home/Book/Book.html",
+                controller: "Library.Home.Book.BookController",
+                controllerAs: "ctrl"
+            })
+                .when("/loan", {
+                templateUrl: "ng-apps/Library.Home/Loan/Loan.html",
+                controller: "Library.Home.Loan.LoanController",
+                controllerAs: "ctrl"
+            })
+                .when("/user", {
+                templateUrl: "ng-apps/Library.Home/User/User.html",
+                controller: "Library.Home.User.UserController",
+                controllerAs: "ctrl"
+            })
                 .otherwise({ redirectTo: "/" });
         }
         // Use this method to register work which should be performed when the injector is done loading all modules.
         function run($log, bookService) {
-            $log.log("Loaded Everything");
+            $('#menu-toggle').click(function (e) {
+                e.preventDefault();
+                $('#wrapper').toggleClass('toggled');
+            });
         }
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home) {
+        var Loan;
+        (function (Loan) {
+            angular.module("Library.Home.Loan", []);
+        })(Loan = Home.Loan || (Home.Loan = {}));
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+/// <reference path="..\..\Library.Home.Loan.ng.ts" />
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home) {
+        var Loan;
+        (function (Loan) {
+            var LoanController = (function () {
+                function LoanController() {
+                    var viewModel = this;
+                }
+                return LoanController;
+            })();
+            angular.module("Library.Home.Loan")
+                .controller("Library.Home.Loan.LoanController", [
+                LoanController
+            ]);
+        })(Loan = Home.Loan || (Home.Loan = {}));
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home) {
+        var User;
+        (function (User) {
+            angular.module("Library.Home.User", []);
+        })(User = Home.User || (Home.User = {}));
+    })(Home = Library.Home || (Library.Home = {}));
+})(Library || (Library = {}));
+/// <reference path="..\..\Library.Home.User.ng.ts" />
+var Library;
+(function (Library) {
+    var Home;
+    (function (Home) {
+        var User;
+        (function (User) {
+            var UserController = (function () {
+                function UserController() {
+                    var viewModel = this;
+                }
+                return UserController;
+            })();
+            angular.module("Library.Home.User")
+                .controller("Library.Home.User.UserController", [
+                UserController
+            ]);
+        })(User = Home.User || (Home.User = {}));
     })(Home = Library.Home || (Library.Home = {}));
 })(Library || (Library = {}));
