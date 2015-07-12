@@ -11,9 +11,8 @@ using Library.Spa.Dtos;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
-using MusicStore.Spa;
-using Spa.Extensions.Extenstions;
-
+using Microsoft.Framework.DependencyInjection; 
+using Microsoft.Data.Entity; 
 namespace Library.Spa
 {
     public class Startup
@@ -37,18 +36,20 @@ namespace Library.Spa
                 settings.DefaultAdminPassword = Configuration.Get("DefaultAdminPassword");
             });
 
-
+            
+            
             // Add the Mvc
             services.AddMvc();
-
+            
             services.AddEntityFramework()
+                .AddSqlite()
                 .AddSqlServer()
                 .AddDbContext<LibraryContext>(options =>
                 {
                     if (Type.GetType("Mono.Runtime") != null)
                     {
                         Console.WriteLine("Detected Linux/Mac Runtime. ");
-                        options.UseInMemoryStore();
+                        options.UseSqlite("Data Source=Library.db");
                     }
                     else
                     {
@@ -90,7 +91,7 @@ namespace Library.Spa
             // app.UseRuntimeInfoPage();
 
             // Show all errors; 
-            app.UseErrorPage(ErrorPageOptions.ShowAll);
+            app.UseErrorPage();
 
             // Initialize the sample data
             SampleData.InitializeLibraryDatabaseAsync(app.ApplicationServices).Wait();
@@ -102,7 +103,7 @@ namespace Library.Spa
             app.UseMvc();
 
             // Add SPA
-            app.UseSpa(new SpaOptions() {DebugMode = true}); 
+            // app.UseSpa(new SpaOptions() {DebugMode = true}); 
 
         }
     }

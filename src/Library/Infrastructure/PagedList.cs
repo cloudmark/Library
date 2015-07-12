@@ -7,7 +7,7 @@ using Microsoft.Data.Entity;
 
 namespace Library.Infrastructure
 {
-    public interface IPagedList<out T>
+    public interface IPagedList<T>
     {
         IEnumerable<T> Data { get; }
 

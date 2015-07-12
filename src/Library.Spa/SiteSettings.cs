@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MusicStore.Spa
+namespace Library.Spa
 {
     public class SiteSettings
     {
