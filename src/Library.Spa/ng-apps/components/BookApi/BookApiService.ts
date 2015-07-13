@@ -2,7 +2,7 @@
 
 module Library.Services {
 	export interface IBookApiService {
-		getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Models.IPagedList<Models.IBook>>;
+		getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
 	}
 
     class BookApiService implements IBookApiService {
@@ -21,7 +21,7 @@ module Library.Services {
             this._urlResolver = urlResolver;
         }
 
-        public getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Models.IPagedList<Models.IBook>> {
+        public getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>> {
             var url = this._urlResolver.resolveUrl("~/api/books"),
                 query: any = {},
                 querySeparator = "?",

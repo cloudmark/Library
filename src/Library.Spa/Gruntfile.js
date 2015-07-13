@@ -15,7 +15,8 @@ module.exports = function (grunt) {
 		}
     });
 
-    grunt.registerTask("ts", ["tslint", "tsng", "typescript:dev", "clean:tsng"]);
+    // grunt.registerTask("ts", ["tslint", "tsng", "typescript:dev", "clean:tsng"]);
+    grunt.registerTask("ts", ["tsng", "typescript:dev", "clean:tsng"]);
     grunt.registerTask("dev", ["clean:assets", "copy", "bower:install", "less:dev", "ts"]);
     grunt.registerTask("release", ["clean", "copy", "uglify", "less:release", "typescript:release"]);
     grunt.registerTask("default", ["dev"]);

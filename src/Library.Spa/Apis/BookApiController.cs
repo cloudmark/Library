@@ -8,7 +8,7 @@ using Microsoft.AspNet.Mvc;
 using Library.Dtos;
 
 namespace Library.Apis {
-	[Route("api/books")]
+	[Route("api/book")]
 	public class BookApiController: Controller{
 		private readonly LibraryContext _libraryContext;
 		

@@ -47,6 +47,7 @@
         "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta5",
         "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
         "Microsoft.Framework.Logging.Console": "1.0.0-beta5",
+        "System.Web.Providers.Core": "1.1.0",
         "AutoMapper": "4.0.0-ci1026",
         "Library": ""
     },
@@ -60,14 +61,10 @@
     },
     "frameworks": {
         "dnx451": {
-            "dependencies": {
-                "Library": ""
-            }
+            "dependencies": {}
         },
         "dnxcore50": {
-            "dependencies": {
-                "Library": ""
-            }
+            "dependencies": {}
         }
     }
 }
