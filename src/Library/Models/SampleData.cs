@@ -14,13 +14,34 @@ namespace Library.Models
 {
     public static class SampleData
     {
+        private static Book[] books = new Book[]
+        {
+            new Book {Name = "An Imperial Affliction", Description = "Description"},
+            new Book {Name = "The Curious Incident Of The Dog In the Night Time", Description = "Description"},
+            new Book {Name = "The Fault In Our Stars", Description = "Description"},
+            new Book {Name = "Women", Description = "Description"},
+            new Book {Name = "An Eternal Golden Braid", Description = "Description"},
+        };
+
+        private static User[] users = new User[]
+        {
+            new User{Name = "Mark", Surname = "Galea"},
+            new User{Name = "John", Surname = "Doe"},
+            new User{Name = "William", Surname = "Smith"},
+            new User{Name = "Kyle", Surname = "Brown"},
+            new User{Name = "Sam", Surname = "Harris"},
+        };
+
+        private static Loan[] loans = new Loan[]
+        {
+            new Loan { Book = books.First(), User = users.First(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
+            new Loan { Book = books.Last(), User = users.Last(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
+        };
 
         public static async Task InitializeLibraryDatabaseAsync(IServiceProvider serviceProvider)
         {
-
             using (var db = serviceProvider.GetService<LibraryContext>())
             {
-                //var sqlServerDatabase = db.Database as RelationalDatabase;
                 if (db.Database != null)
                 {
                     // Create the database.  
@@ -28,14 +49,14 @@ namespace Library.Models
                     {
                         await InsertUsers(serviceProvider);
                         await InsertBooks(serviceProvider);
-                        //await InsertLoans(serviceProvider);
+                        await InsertLoans(serviceProvider);
                     }
                 }
                 else
                 {
                     await InsertUsers(serviceProvider);
                     await InsertBooks(serviceProvider);
-                    //await InsertLoans(serviceProvider);
+                    await InsertLoans(serviceProvider);
                 }
             }
         }
@@ -45,10 +66,14 @@ namespace Library.Models
             await AddOrUpdateAsync<User>(serviceProvider, g => g.Id, GetUsers());
         }
 
-
         private static async Task InsertBooks(IServiceProvider serviceProvider)
         {
             await AddOrUpdateAsync<Book>(serviceProvider, g => g.Id, GetBooks());
+        }
+
+        private static async Task InsertLoans(IServiceProvider serviceProvider)
+        {
+            await AddOrUpdateAsync<Loan>(serviceProvider, g => g.Id, GetLoans());
         }
 
         private static async Task AddOrUpdateAsync<TEntity>(
@@ -78,28 +103,17 @@ namespace Library.Models
 
         private static Book[] GetBooks()
         {
-            return new Book[]
-            {
-                new Book {Name = "An Imperial Affliction", Description = "Description"},
-                new Book {Name = "The Curious Incident Of The Dog In the Night Time", Description = "Description"},
-                new Book {Name = "The Fault In Our Stars", Description = "Description"},
-                new Book {Name = "Women", Description = "Description"},
-                new Book {Name = "An Eternal Golden Braid", Description = "Description"},
-
-            };
+            return books;
         }
 
         private static User[] GetUsers()
         {
-            return new User[] {
-                new User{Name = "Mark", Surname = "Galea"},
-                new User{Name = "John", Surname = "Doe"},
-                new User{Name = "William", Surname = "Smith"},
-                new User{Name = "Kyle", Surname = "Brown"},
-                new User{Name = "Sam", Surname = "Harris"},
-            };
+            return users;
         }
 
-       
+        private static Loan[] GetLoans()
+        {
+            return loans;
+        }
     }
 }
