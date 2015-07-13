@@ -1,31 +1,24 @@
 {
-  "description": "Library Class Library",
-  "projectUrl": "",
-  "licenseUrl": "",
-  "dependencies": {
-    "System.Collections": "4.0.10-*",
-    "System.Linq": "4.0.0-*",
-    "System.Threading": "4.0.10-*",
-    "System.Runtime": "4.0.20-*", 
-    "EntityFramework.InMemory": "7.0.0-beta5-*",
-    "EntityFramework.SqlServer": "7.0.0-beta5-*",
-    "Microsoft.AspNet.Mvc.Core": "6.0.0-beta5-*",  
-    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta5",
-    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta5", 
-    "Microsoft.DataAnnotations":  "1.0.0-beta1"
-  },
-  "compilationOptions": {
-    "define": [
-      "DEBUG",
-      "TRACE"
-    ]
-  },
+    "description": "Library Class Library",
+    "dependencies": {
+        "EntityFramework.Commands": "7.0.0-*",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
+        "EntityFramework.InMemory": "7.0.0-*",
+        "EntityFramework.SqlServer": "7.0.0-*",
+        "EntityFramework.SQLite": "7.0.0-*",
+        "Microsoft.AspNet.Mvc.Core": "6.0.0-*",
+        "Microsoft.AspNet.Mvc.ViewFeatures": "6.0.0-*",
+        "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-*"
+    },
   "frameworks": {
-    "dnx451": {},
-    "dnxcore50": {
+    "dnx451": { 
       "dependencies": {
-        "System.Runtime.Extensions": "4.0.10-beta-23019"
+        "System.Collections": "4.0.10-*",
+        "System.Linq": "4.0.0-*",
+        "System.Threading": "4.0.10-*",
+        "System.Runtime": "4.0.20-*"
       }
-    }
+    },
+    "dnxcore50": {}
   }
 }

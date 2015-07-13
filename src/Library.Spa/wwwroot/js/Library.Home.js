@@ -161,14 +161,13 @@ var Library;
                 };
                 BookController.prototype.requestBook = function () {
                     var _this = this;
-                    debugger;
                     this.bookApi.requestBook(this.currentBook).then(function (book) {
                         _this.currentBook = {
                             Id: -1,
                             Name: "",
                             Description: ""
                         };
-                        _this.books.push.apply(_this.books, [book]);
+                        _this.books.push(book);
                     });
                 };
                 return BookController;
