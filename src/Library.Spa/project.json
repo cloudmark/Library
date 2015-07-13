@@ -30,11 +30,6 @@
         "EntityFramework.InMemory": "7.0.0-beta5",
         "Kestrel": "1.0.0-beta5",
         "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta5",
-        "Microsoft.AspNet.Authentication.Facebook": "1.0.0-beta5",
-        "Microsoft.AspNet.Authentication.Google": "1.0.0-beta5",
-        "Microsoft.AspNet.Authentication.MicrosoftAccount": "1.0.0-beta5",
-        "Microsoft.AspNet.Authentication.OpenIdConnect": "1.0.0-beta5",
-        "Microsoft.AspNet.Authentication.Twitter": "1.0.0-beta5",
         "Microsoft.AspNet.Diagnostics": "1.0.0-beta5",
         "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta5",
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta5",
@@ -45,11 +40,13 @@
         "Microsoft.AspNet.SignalR.Server": "3.0.0-beta5",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta5",
         "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta5",
-        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+        "Microsoft.Framework.Configuration.Json": "1.0.0-beta5",
         "Microsoft.Framework.Logging.Console": "1.0.0-beta5",
+        "EntityFramework.Commands": "7.0.0-beta5",
         "System.Web.Providers.Core": "1.1.0",
         "AutoMapper": "4.0.0-ci1026",
-        "Library": ""
+        "Library": "", 
+        "Spa.Extensions": ""
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",

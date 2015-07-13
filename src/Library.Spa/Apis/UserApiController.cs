@@ -1,4 +1,5 @@
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Mvc;
 using Library.Models; 
 
@@ -13,7 +14,8 @@ namespace Library.Apis {
 		
 		[HttpGet]
 		public IEnumerable<User> GetAll(){
-			return _libraryContext.Users;
+			// return _libraryContext.LibraryUsers.All();
+		    return new User[] {};
 		}
 	}
 	

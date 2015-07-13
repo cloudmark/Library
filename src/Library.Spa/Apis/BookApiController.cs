@@ -4,7 +4,6 @@ using Library.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
 using Library.Dtos;
 
 namespace Library.Apis {
@@ -23,7 +22,7 @@ namespace Library.Apis {
 		
 		[HttpGet("{albumId:int}")]
 		public async Task<Book> Details(int albumId){
-			return await Task.Run(() =>  _libraryContext.Books.Where(b => b.Id == albumId).First());
+			return await Task.Run(() =>  _libraryContext.Books.First(b => b.Id == albumId));
 		}
 		
 		//  public async Task<ActionResult> CreateBook ([FromBody] BookChangeDto book){

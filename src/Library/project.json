@@ -6,7 +6,12 @@
     "System.Collections": "4.0.10-*",
     "System.Linq": "4.0.0-*",
     "System.Threading": "4.0.10-*",
-    "System.Runtime": "4.0.20-*"
+    "System.Runtime": "4.0.20-*", 
+    "EntityFramework.InMemory": "7.0.0-beta5-*",
+    "EntityFramework.SqlServer": "7.0.0-beta5-*",
+    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta5",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta5", 
+    "System.ComponentModel.Annotations": "4.0.10-beta-*"
   },
   "compilationOptions": {
     "define": [
