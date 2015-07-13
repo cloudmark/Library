@@ -1,15 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.Mvc {
+namespace Library.Spa.Infrastructure {
 	public class ApiResult: ActionResult {
 		[JsonIgnore]
         public int? StatusCode { get; set; }
-        
+
+        public bool Error => StatusCode != null && StatusCode != 200; 
+
+	    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

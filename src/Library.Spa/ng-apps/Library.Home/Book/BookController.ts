@@ -1,17 +1,57 @@
 ﻿module Library.Home.Book {
-    interface IHomeViewModel {
-        books: Array<Models.IBook>
+
+    interface IBookViewModel {
+        books: Array<Models.IBook>; 
+        refreshBooks(): void; 
+        clearFilters(): void;
+        requestBook(): void;
     }
 
-    class HomeController implements IHomeViewModel {
-        public books: Array<Models.IBook>;
+    class BookController implements IBookViewModel {
+        private $scope: ng.IScope; 
+        private bookApi: Services.IBookApiService; 
+        public books: Array<Models.IBook> = [];
+        public filters = {
+            Id: "",
+            Name: "", 
+            Description: ""
+        }
+        public currentBook: Models.IBook = {
+            Id: -1,
+            Name: "",
+            Description: ""
+        };
 
-        constructor(bookApi: Services.IBookApiService) {
-            var viewModel = this;
+        constructor($scope: ng.IScope, bookApi: Services.IBookApiService) {
+            this.$scope = $scope; 
+            this.bookApi = bookApi;
+            this.refreshBooks();
+        }
 
-            bookApi.getBooks().then(books => {
-                viewModel.books = books;
+        refreshBooks(): void {
+            this.bookApi.getBooks().then(books => {
+                this.books.length = 0;
+                this.books.push.apply(this.books, books); 
             });
         }
+
+        clearFilters(): void {
+            this.filters.Id = "";
+            this.filters.Name = "";
+            this.filters.Description = ""; 
+        }
+        
+        requestBook(): void {
+            debugger; 
+            this.bookApi.requestBook(this.currentBook).then(book => {
+                this.currentBook = {
+                    Id: -1,
+                    Name: "",
+                    Description: ""
+                };
+                this.books.push.apply(this.books, [book]);
+            });
+        }
+    
     }
 }

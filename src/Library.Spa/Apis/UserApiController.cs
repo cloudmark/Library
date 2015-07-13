@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
+using Library.Models;
 using Microsoft.AspNet.Mvc;
-using Library.Models; 
 
-namespace Library.Apis {
+namespace Library.Spa.Apis {
 	[Route("api/user")]
 	public class UserApiController: Controller{
 		private readonly LibraryContext _libraryContext;

@@ -1,41 +1,95 @@
-using System.Collections.Generic; 
-using Microsoft.AspNet.Mvc;
-using Library.Models; 
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Authorization;
-using Library.Dtos;
+using AutoMapper;
+using Library.Infrastructure;
+using Library.Models;
+using Library.Services;
+using Library.Spa.Dtos;
+using Library.Spa.Infrastructure;
+using Microsoft.AspNet.Mvc;
 
-namespace Library.Apis {
-	[Route("api/book")]
+namespace Library.Spa.Apis {
+	[Route("api/books")]
 	public class BookApiController: Controller{
-		private readonly LibraryContext _libraryContext;
+		private readonly IBookService _bookService; 
 		
-		public BookApiController(LibraryContext libraryContext){
-			_libraryContext = libraryContext;
+		public BookApiController(IBookService bookService){
+			_bookService = bookService; 
 		}
 		
 		[HttpGet]
-		public IEnumerable<Book> GetAll(){
-			return _libraryContext.Books;
+        [NoCache]
+        public async Task<ApiResult> GetAll()
+		{
+		    var books =  await _bookService.All();
+		    return new ApiResult
+		    {
+		        Data = books.MapTo(b => Mapper.Map(b, new BookResultDto())),
+            };
 		}
 		
-		[HttpGet("{albumId:int}")]
-		public async Task<Book> Details(int albumId){
-			return await Task.Run(() =>  _libraryContext.Books.First(b => b.Id == albumId));
+		[HttpGet("{bookId:int}")]
+        [NoCache]
+        public async Task<ApiResult> Details(int bookId)
+		{
+		    var book = await _bookService.Details(bookId);
+            if (book == null)
+                return new ApiResult
+                {
+                    StatusCode = 404,
+                    Message = $"The book with ID {bookId} was not found."
+                };
+
+            return new ApiResult
+		    {
+		        Data = Mapper.Map(book, new BookDetailedResultDto())
+		    };
 		}
-		
-		//  public async Task<ActionResult> CreateBook ([FromBody] BookChangeDto book){
-		//  	if (!ModelState.IsValid){
-		//  		return new ApiResult(ModelState); 
-		//  	}
-			
-		//  	var book = new Book(); 
-			
-			
-		//  }
-		
-		
-	}
-		
+
+        [HttpPost]
+        public async Task<ApiResult> CreateBook([FromBody]BookChangeDto bookDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new ApiResult(ModelState);
+            }
+
+            var book = new Book();
+            await _bookService.CreateBook(Mapper.Map(bookDto, book));
+
+            return new ApiResult
+            {
+                Data = Mapper.Map(book, new BookDetailedResultDto())
+            };
+        }
+
+        [HttpPut("{bookId:int}")]
+        public async Task<ApiResult> UpdateBook(int bookId, [FromBody]BookChangeDto bookDto)
+        {
+            if (!ModelState.IsValid)
+                return new ApiResult(ModelState);
+            
+            var book = await _bookService.Details(bookId);
+            if (book == null)
+                return new ApiResult
+                {
+                    StatusCode = 404,
+                    Message = $"The book with ID {bookId} was not found."
+                };
+            
+            Mapper.Map(bookDto, book);
+            await _bookService.Update(book);
+
+            return new ApiResult
+            {
+                Data = Mapper.Map(book, new BookDetailedResultDto())
+            };
+        }
+
+
+
+
+
+    }
+
 }

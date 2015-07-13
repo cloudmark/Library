@@ -8,9 +8,7 @@ module Library.UrlResolver {
         private _base: string;
 
         constructor($rootElement: ng.IAugmentedJQuery) {
-            // this._base = $rootElement.attr("data-url-base");
-            // TODO: Fix this to use a template html page so that we can inject properties.  
-			this._base = "http://localhost:5004/";
+             this._base = $rootElement.attr("data-url-base");
             // Add trailing slash if not present
             if (this._base === "" || this._base.substr(this._base.length - 1) !== "/") {
                 this._base = this._base + "/";

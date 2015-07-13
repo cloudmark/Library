@@ -44,9 +44,10 @@
         "Microsoft.Framework.Logging.Console": "1.0.0-beta5",
         "EntityFramework.Commands": "7.0.0-beta5",
         "System.Web.Providers.Core": "1.1.0",
+        "Newtonsoft.Json": "7.0.1-beta3",
         "AutoMapper": "4.0.0-ci1026",
         "Library": "", 
-        "Spa.Extensions": ""
+        "Spa.Extensions": "1.0.0-beta1"
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",

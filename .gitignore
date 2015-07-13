@@ -208,3 +208,6 @@ FakesAssemblies/
 # WWW Root lib
 **/wwwroot/lib/
 src/Library.Spa/wwwroot/ng-apps/
+*.xproj
+test/Library.Test/Library.Test.sln
+*.sln

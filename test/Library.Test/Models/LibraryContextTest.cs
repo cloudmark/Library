@@ -6,7 +6,7 @@ namespace Library.Test.Models
 {
     public class LibraryContextTest
     {
-        private readonly IServiceProvider _serviceProvider;
+//        private readonly IServiceProvider _serviceProvider;
 
         public LibraryContextTest()
         {
