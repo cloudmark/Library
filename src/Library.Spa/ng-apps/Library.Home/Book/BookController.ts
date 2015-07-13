@@ -31,7 +31,7 @@
         refreshBooks(): void {
             this.bookApi.getBooks().then(books => {
                 this.books.length = 0;
-                this.books.push.apply(this.books, books); 
+                this.books.push.apply(this.books, books);
             });
         }
 
@@ -42,14 +42,13 @@
         }
         
         requestBook(): void {
-            debugger; 
             this.bookApi.requestBook(this.currentBook).then(book => {
                 this.currentBook = {
                     Id: -1,
                     Name: "",
                     Description: ""
                 };
-                this.books.push.apply(this.books, [book]);
+                this.books.push(book);
             });
         }
     

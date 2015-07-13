@@ -12,7 +12,9 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
 using Microsoft.Framework.DependencyInjection; 
-using Microsoft.Data.Entity; 
+using Microsoft.Data.Entity;
+using Spa.Extensions.Extenstions;
+
 namespace Library.Spa
 {
     public class Startup
@@ -103,7 +105,7 @@ namespace Library.Spa
             app.UseMvc();
 
             // Add SPA
-            // app.UseSpa(new SpaOptions() {DebugMode = true}); 
+            app.UseSpa(new SpaOptions() {DebugMode = true}); 
 
         }
     }

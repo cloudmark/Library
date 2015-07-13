@@ -40,9 +40,9 @@
         "Microsoft.Framework.Configuration.Json": "1.0.0-*",
         "Microsoft.Framework.Logging.Console": "1.0.0-*",
         "EntityFramework.Commands": "7.0.0-*",
-        "System.Web.Providers.Core": "1.1.0",
         "Newtonsoft.Json": "7.0.1-*",
         "AutoMapper": "4.0.0-*",
+        "Spa.Extensions": "1.0.0-beta6",
         "Library": ""
     },
     "commands": {
