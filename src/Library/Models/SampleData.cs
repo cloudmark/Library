@@ -20,23 +20,23 @@ namespace Library.Models
 
             using (var db = serviceProvider.GetService<LibraryContext>())
             {
-                //  var sqlServerDatabase = db.Database as RelationalDatabase;
-                //  if (sqlServerDatabase != null)
-                //  {
-                //      // Create the database.  
+                //var sqlServerDatabase = db.Database as RelationalDatabase;
+                if (db.Database != null)
+                {
+                    // Create the database.  
                     if (await db.Database.EnsureCreatedAsync())
                     {
                         await InsertUsers(serviceProvider);
                         await InsertBooks(serviceProvider);
                         //await InsertLoans(serviceProvider);
                     }
-                //  }
-                //  else
-                //  {
-                //      await InsertUsers(serviceProvider);
-                //      await InsertBooks(serviceProvider);
-                //      //await InsertLoans(serviceProvider);
-                //  }
+                }
+                else
+                {
+                    await InsertUsers(serviceProvider);
+                    await InsertBooks(serviceProvider);
+                    //await InsertLoans(serviceProvider);
+                }
             }
         }
 

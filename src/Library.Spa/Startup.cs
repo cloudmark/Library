@@ -11,8 +11,6 @@ using Library.Spa.Dtos;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
-using Microsoft.Framework.DependencyInjection; 
-using Microsoft.Data.Entity;
 using Spa.Extensions.Extenstions;
 
 namespace Library.Spa
