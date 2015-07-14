@@ -8,14 +8,18 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Relational;
 using Microsoft.Data.Entity.SqlServer;
+using Microsoft.Data.Entity.Storage;
+using Microsoft.Framework.DependencyInjection;
+
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 
 namespace Library.Models
 {
     public static class SampleData
     {
-        private static Book[] books = new Book[]
-        {
+        private static readonly Book[] books = {
             new Book {Name = "An Imperial Affliction", Description = "Description"},
             new Book {Name = "The Curious Incident Of The Dog In the Night Time", Description = "Description"},
             new Book {Name = "The Fault In Our Stars", Description = "Description"},
@@ -23,8 +27,7 @@ namespace Library.Models
             new Book {Name = "An Eternal Golden Braid", Description = "Description"},
         };
 
-        private static User[] users = new User[]
-        {
+        private static readonly User[] users = {
             new User{Name = "Mark", Surname = "Galea"},
             new User{Name = "John", Surname = "Doe"},
             new User{Name = "William", Surname = "Smith"},
@@ -32,8 +35,7 @@ namespace Library.Models
             new User{Name = "Sam", Surname = "Harris"},
         };
 
-        private static Loan[] loans = new Loan[]
-        {
+        private static readonly Loan[] loans = {
             new Loan { Book = books.First(), User = users.First(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
             new Loan { Book = books.Last(), User = users.Last(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
         };
@@ -42,9 +44,9 @@ namespace Library.Models
         {
             using (var db = serviceProvider.GetService<LibraryContext>())
             {
+
                 if (db.Database != null)
                 {
-                    // Create the database.  
                     if (await db.Database.EnsureCreatedAsync())
                     {
                         await InsertUsers(serviceProvider);
@@ -57,6 +59,7 @@ namespace Library.Models
                     await InsertUsers(serviceProvider);
                     await InsertBooks(serviceProvider);
                     await InsertLoans(serviceProvider);
+
                 }
             }
         }
@@ -110,6 +113,7 @@ namespace Library.Models
         {
             return users;
         }
+
 
         private static Loan[] GetLoans()
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -42,26 +44,17 @@ namespace Library.Spa
             services.AddMvc();
             
             services.AddEntityFramework()
-                .AddSqlite()
                 .AddSqlServer()
                 .AddDbContext<LibraryContext>(options =>
                 {
-                    if (Type.GetType("Mono.Runtime") != null)
-                    {
-                        Console.WriteLine("Detected Linux/Mac Runtime. ");
-                        options.UseSqlite("Data Source=Library.db");
-                    }
-                    else
-                    {
                         Console.WriteLine("Detected Windows Runtime. ");
                         options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString"));
-                    }
                 });
 
             // Add Identity services to the services container
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddEntityFrameworkStores<LibraryContext>()
-                    .AddDefaultTokenProviders();
+//            services.AddIdentity<ApplicationUser, IdentityRole>()
+//                    .AddEntityFrameworkStores<LibraryContext>()
+//                    .AddDefaultTokenProviders();
 
             // Configure Auth
             //            services.Configure<AuthorizationOptions>(options =>
@@ -70,9 +63,9 @@ namespace Library.Spa
             //            });
 
             // Create the services
-            services.AddSingleton<IBookService, BookService>();
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<ILoanService, LoanService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoanService, LoanService>();
 
             // Configure the mapper
             Mapper.CreateMap<Book, BookResultDto>();
