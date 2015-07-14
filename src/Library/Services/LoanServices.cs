@@ -14,8 +14,8 @@ namespace Library.Services
         Task<IPagedList<Loan>> Paged(int page = 1, int pageSize = 50, string sortBy = null);
         Task<List<Loan>> All();
         Task<Loan> Details(int loanId);
-        Task<int> LoanBook(int userId, int bookId, int days);
-        Task ReturnBook(int userId, int bookId);
+        Task<bool> LoanBook(int userId, int bookId, int days);
+        Task<bool> ReturnBook(int userId, int bookId);
     }
 
     public class LoanService : ILoanService
@@ -48,7 +48,7 @@ namespace Library.Services
             return await _libraryContext.Loans.Include(l => l.User).Include(l => l.Book).Where(l => l.Id == loanId).SingleOrDefaultAsync();
         }
 
-        public async Task<int> LoanBook(int userId, int bookId, int days)
+        public async Task<bool> LoanBook(int userId, int bookId, int days)
         {
             var b = await _bookService.Details(bookId);
             var u = await _userService.Details(userId);
@@ -64,18 +64,21 @@ namespace Library.Services
                 LoanEnd = currentDate.AddDays(days)
             };
             _libraryContext.Loans.Add(loan);
-            return await _libraryContext.SaveChangesAsync();
+            int rowsSaved = await _libraryContext.SaveChangesAsync();
+            return rowsSaved > 0;
         }
 
-        public async Task ReturnBook(int userId, int bookId)
+        public async Task<bool> ReturnBook(int userId, int bookId)
         {
             var loan = await _libraryContext.Loans.Where(l => l.Book.Id == bookId && l.User.Id == userId).SingleOrDefaultAsync();
             if (loan != null)
             {
                 loan.LoanEnd = DateTime.Now;
-                await _libraryContext.SaveChangesAsync();
+                int rowsSaved = await _libraryContext.SaveChangesAsync();
+                return rowsSaved > 0;
             }
+            else
+                return false;
         }
-
     }
 }

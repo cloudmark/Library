@@ -14,7 +14,8 @@ namespace Library.Spa.Dtos {
         public int Id { get; set; }
         public BookResultDto Book { get; set; }
         public UserResultDto User { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime LoanStart { get; set; }
+        public DateTime LoanEnd { get; set; }
     }
 
 	public class LoanChangeDto {
