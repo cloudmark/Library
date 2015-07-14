@@ -10,10 +10,12 @@ using Library.Models;
 using AutoMapper;
 using Library.Services;
 using Library.Spa.Dtos;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
 using Spa.Extensions.Extenstions;
+using Microsoft.AspNet.Authentication.OAuth;
 
 namespace Library.Spa
 {
@@ -51,16 +53,16 @@ namespace Library.Spa
                         options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString"));
                 });
 
-            // Add Identity services to the services container
-//            services.AddIdentity<ApplicationUser, IdentityRole>()
-//                    .AddEntityFrameworkStores<LibraryContext>()
-//                    .AddDefaultTokenProviders();
+//             Add Identity services to the services container
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<LibraryContext>()
+                    .AddDefaultTokenProviders();
 
             // Configure Auth
-            //            services.Configure<AuthorizationOptions>(options =>
-            //            {
-            //                options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
-            //            });
+//                        services.Configure<AuthorizationOptions>(options =>
+//                        {
+//                            options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
+//                        });
 
             // Create the services
             services.AddScoped<IBookService, BookService>();
@@ -94,6 +96,10 @@ namespace Library.Spa
 
             // Add MVC
             app.UseMvc();
+
+            app.UseIdentity();
+
+            app.UseOAuthAuthentication
 
             // Add SPA
             app.UseSpa(new SpaOptions() {DebugMode = true}); 
