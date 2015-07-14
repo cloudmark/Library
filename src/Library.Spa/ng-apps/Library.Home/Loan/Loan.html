@@ -9,4 +9,76 @@
         <p>Loan</p>
         <a href="#/">Back </a>
     </div>
+
+    <div ng-show="!ctrl.loading() && !ctrl.error()" class="row">
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Request Book</h5>
+                </div>
+                <div class="panel-body">
+                    {{requestBookForm.$valid}}
+                    <form id="requestBookForm" ng-submit="ctrl.requestBook()" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="bookIdentifier">Book</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Name" class="form-control" id="bookIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="userIdentifier">User</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Description" class="form-control" id="userIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="loanStartIdentifier">Loan Start</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Description" class="form-control" id="loanStartIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="loanEndIdentifier">Loan End</label>
+                            <input type="text" required data-ng-model="ctrl.currentBook.Description" class="form-control" id="loanEndIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button type="submit" class="btn btn-info">Request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Available Books</h5>
+                </div>
+                <div class="panel-body">
+                    <div ng-hide="ctrl.books.length" class="alert" role="alert">
+                        No Results for your Query. <a ng-click="ctrl.clearFilters()" class="alert-link">Clear Results</a> and try again?
+                    </div>
+                    <table ng-show="ctrl.books.length" class="table table-striped table-condensed table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="book in filteredBooks  = (ctrl.books | filter: {Id: ctrl.filters.Id, Name: ctrl.filters.Name, Description: ctrl.filters.Description}) track by book.Id">
+
+                            <td><a ng-href="/#/book/{{book.Id}}">/{{book.Id}}</a></td>
+                            <td>{{book.Name}}</td>
+                            <td>{{book.Description}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-primary btn-large btn-block btn" data-ng-click="ctrl.refreshBooks()">Refresh</div>
+            <div class="span3">&nbsp;</div>
+        </div>
+    </div>
 </div>
