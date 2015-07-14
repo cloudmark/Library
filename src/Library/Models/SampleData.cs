@@ -40,25 +40,25 @@ namespace Library.Models
 
         public static async Task InitializeLibraryDatabaseAsync(IServiceProvider serviceProvider)
         {
-            using (var db = serviceProvider.GetService<LibraryContext>())
-            {
-                if (db.Database != null)
-                {
-                    // Create the database.  
-                    if (await db.Database.EnsureCreatedAsync())
-                    {
-                        await InsertUsers(serviceProvider);
-                        await InsertBooks(serviceProvider);
-                        await InsertLoans(serviceProvider);
-                    }
-                }
-                else
-                {
-                    await InsertUsers(serviceProvider);
-                    await InsertBooks(serviceProvider);
-                    await InsertLoans(serviceProvider);
-                }
-            }
+            //using (var db = serviceProvider.GetService<LibraryContext>())
+            //{
+            //    if (db.Database != null)
+            //    {
+            //        // Create the database.  
+            //        if (await db.Database.EnsureCreatedAsync())
+            //        {
+            //            await InsertUsers(serviceProvider);
+            //            await InsertBooks(serviceProvider);
+            //            await InsertLoans(serviceProvider);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        await InsertUsers(serviceProvider);
+            //        await InsertBooks(serviceProvider);
+            //        await InsertLoans(serviceProvider);
+            //    }
+            //}
         }
 
         private static async Task InsertUsers(IServiceProvider serviceProvider)
