@@ -21,22 +21,43 @@ module Library.Home {
             .when("/", {
             templateUrl: "ng-apps/Library.Home/Home/Home.html",
             controller: "Library.Home.Home.HomeController",
-            controllerAs: "ctrl"
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
         })
             .when("/book", {
             templateUrl: "ng-apps/Library.Home/Book/Book.html",
             controller: "Library.Home.Book.BookController",
-            controllerAs: "ctrl"
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
+        })
+            .when("/book/:bookId", {
+            templateUrl: "ng-apps/Library.Home/Book/BookDetail.html",
+            controller: "Library.Home.Book.BookDetailController",
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
         })
             .when("/loan", {
             templateUrl: "ng-apps/Library.Home/Loan/Loan.html",
             controller: "Library.Home.Loan.LoanController",
-            controllerAs: "ctrl"
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
+        })
+            .when("/loan/:loanId", {
+            templateUrl: "ng-apps/Library.Home/Loan/LoanDetail.html",
+            controller: "Library.Home.Loan.LoanDetailController",
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
         })
             .when("/user", {
             templateUrl: "ng-apps/Library.Home/User/User.html",
             controller: "Library.Home.User.UserController",
-            controllerAs: "ctrl"
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
+        }).when("/user/:userId", {
+            templateUrl: "ng-apps/Library.Home/User/UserDetail.html",
+            controller: "Library.Home.User.UserDetailController",
+            controllerAs: "ctrl",
+            access: { requiresLogin: true }
         })
             .otherwise({ redirectTo: "/" });
     }
@@ -47,5 +68,7 @@ module Library.Home {
             e.preventDefault();
             $('#wrapper').toggleClass('toggled');
         });
+
+
     }
 }

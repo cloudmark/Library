@@ -15,9 +15,12 @@
         "ng-apps/components/UrlResolver/UrlResolverService.ng.ts",
         "ng-apps/components/UserApi/UserApiService.ng.ts",
         "ng-apps/Library.Home/Book/BookController.ng.ts",
+        "ng-apps/Library.Home/Book/BookDetailController.ng.ts",
         "ng-apps/Library.Home/Home/HomeController.ng.ts",
         "ng-apps/Library.Home/Library.Home.app.ng.ts",
         "ng-apps/Library.Home/Loan/LoanController.ng.ts",
-        "ng-apps/Library.Home/User/UserController.ng.ts"
+        "ng-apps/Library.Home/Loan/LoanDetailController.ng.ts",
+        "ng-apps/Library.Home/User/UserController.ng.ts",
+        "ng-apps/Library.Home/User/UserDetailController.ng.ts"
     ]
 }
