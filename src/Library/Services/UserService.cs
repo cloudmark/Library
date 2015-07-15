@@ -14,6 +14,7 @@ namespace Library.Services
         Task<List<User>> All();
         Task<User> Details(int userId);
         Task<int> CreateUser(User b);
+        Task Update(User user);
         Task DeleteUser(int userId);
     }
 
@@ -39,13 +40,20 @@ namespace Library.Services
 
         public async Task<User> Details(int userId)
         {
-            return await _libraryContext.LibraryUsers.Include(u => u.Loans).Where(u => u.Id == userId).SingleOrDefaultAsync();
+            return await _libraryContext.LibraryUsers
+                .Include(u => u.Loans)
+                .Where(u => u.Id == userId).SingleOrDefaultAsync();
         }
 
         public async Task<int> CreateUser(User b)
         {
             _libraryContext.LibraryUsers.Add(b);
             return await _libraryContext.SaveChangesAsync();
+        }
+
+        public async Task Update(User user)
+        {
+            await _libraryContext.SaveChangesAsync();
         }
 
         public async Task DeleteUser(int userId)

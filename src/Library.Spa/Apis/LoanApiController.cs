@@ -13,59 +13,58 @@ using Library.Spa.Dtos;
 namespace Library.Spa.Apis {
 	[Route("api/loan")]
 	public class LoanApiController: Controller{
-		private readonly ILoanService loanService;
+		private readonly ILoanService _loanService;
 		
 		public LoanApiController(ILoanService loanService)
         {
-            this.loanService = loanService;
+            this._loanService = loanService;
 		}
 
         [HttpGet]
 		public async Task<ApiResult> GetAll()
         {
-            var loans = await this.loanService.All();
+            var loans = await this._loanService.AllWithDetails();
             return new ApiResult
             {
-                Data = Mapper.Map<IEnumerable<LoanResultDto>>(loans)
+                Data = Mapper.Map<IEnumerable<LoanDetailsResultDto>>(loans)
             };
         }
 
         [HttpGet("{loanId:int}")]
         [NoCache]
-        public async Task<ApiResult> Details(int bookId)
+        public async Task<ApiResult> Details(int loanId)
         {
-            var book = await loanService.Details(bookId);
-            if (book == null)
+            var loan = await _loanService.Details(loanId);
+            if (loan == null)
                 return new ApiResult
                 {
                     StatusCode = 404,
-                    Message = $"The book with ID {bookId} was not found."
+                    Message = $"The loan with ID {loanId} was not found."
                 };
 
             return new ApiResult
             {
-                Data = Mapper.Map(book, new BookDetailedResultDto())
+                Data = Mapper.Map(loan, new LoanDetailsResultDto())
             };
         }
 
         [HttpPost]
-        public async Task<ApiResult> LoanBook(int userId, int bookId, int days)
+        public async Task<ApiResult> LoanBook([FromBody]LoanChangeDto loanChangeDto)
         {
             if (!ModelState.IsValid)
             {
                 return new ApiResult(ModelState);
             }
             
-            var book = new Book();
-            bool saved = await loanService.LoanBook(userId, bookId, days);
+            var loan = await _loanService.LoanBook(loanChangeDto.UserId, loanChangeDto.BookId, loanChangeDto.Days);
 
             return new ApiResult
             {
-                Data = Mapper.Map(book, new BookDetailedResultDto())
+                Data = Mapper.Map(loan, new LoanDetailsResultDto())
             };
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<ApiResult> ReturnBook(int userId, int bookId)
         {
             if (!ModelState.IsValid)
@@ -74,13 +73,13 @@ namespace Library.Spa.Apis {
             }
 
             var book = new Book();
-            bool saved = await loanService.ReturnBook(userId, bookId);
-
+            bool saved = await _loanService.ReturnBook(userId, bookId);
             return new ApiResult
             {
                 Data = Mapper.Map(book, new BookDetailedResultDto())
             };
         }
+
     }
 	
 }

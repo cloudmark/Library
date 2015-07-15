@@ -79,6 +79,12 @@ namespace Library.Spa
             Mapper.CreateMap<Book, BookResultDto>();
             Mapper.CreateMap<Book, BookDetailedResultDto>(); 
             Mapper.CreateMap<BookChangeDto, Book>();
+            Mapper.CreateMap<User, UserResultDto>();
+            Mapper.CreateMap<User, UserDetailResultDto>();
+            Mapper.CreateMap<UserChangeDto, User>();
+            Mapper.CreateMap<Loan, LoanResultDto>();
+            Mapper.CreateMap<Loan, LoanDetailsResultDto>();
+            Mapper.CreateMap<LoanChangeDto, Loan>();
 
 
         }

@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using  System.ComponentModel.DataAnnotations; 
 using  System.ComponentModel.DataAnnotations.Schema;
+using Library.Services;
 
 namespace Library.Models
 {
@@ -13,5 +16,8 @@ namespace Library.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "The Price is required.")]
         public string Description { get; set; }
+
+        [InverseProperty("LoanId")]
+        public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }
 }

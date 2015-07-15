@@ -15,7 +15,8 @@ var Library;
                     this.currentBook = {
                         Id: -1,
                         Name: "",
-                        Description: ""
+                        Description: "",
+                        Loans: []
                     };
                     this.$scope = $scope;
                     this.bookApi = bookApi;
@@ -39,7 +40,8 @@ var Library;
                         _this.currentBook = {
                             Id: -1,
                             Name: "",
-                            Description: ""
+                            Description: "",
+                            Loans: []
                         };
                         _this.books.push(book);
                     });

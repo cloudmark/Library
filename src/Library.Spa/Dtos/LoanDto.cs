@@ -1,15 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Spa.Dtos {
+
     public class LoanResultDto
     {
         public int Id { get; set; }
         public int BookId { get; set; }
+        public string BookName { get; set; }
         public int UserId { get; set; }
-        public DateTime DateTime { get; set; }
+        public string UserFullName { get; set; }
+        public DateTime LoanStart { get; set; }
+        public DateTime LoanEnd { get; set; }
     }
 
-    public class LoanDetailedResultDto
+    public class LoanDetailsResultDto
     {
         public int Id { get; set; }
         public BookResultDto Book { get; set; }
@@ -18,8 +23,14 @@ namespace Library.Spa.Dtos {
         public DateTime LoanEnd { get; set; }
     }
 
-	public class LoanChangeDto {
-		
+    public class LoanChangeDto
+	{
+        [Required]
+	    public int BookId;
+        [Required]
+        public int UserId;
+        [Required]
+        public int Days; 
 	}
 	
 }

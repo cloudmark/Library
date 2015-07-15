@@ -47,9 +47,9 @@ namespace Library.Models
         {
             using (var db = serviceProvider.GetService<LibraryContext>())
             {
-
                 if (db.Database != null)
                 {
+                    // Create the database.  
                     if (await db.Database.EnsureCreatedAsync())
                     {
                         await CreateAdminUser(serviceProvider);
@@ -64,7 +64,6 @@ namespace Library.Models
                     await InsertUsers(serviceProvider);
                     await InsertBooks(serviceProvider);
                     await InsertLoans(serviceProvider);
-
                 }
             }
         }

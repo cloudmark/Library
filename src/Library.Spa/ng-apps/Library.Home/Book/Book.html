@@ -5,19 +5,13 @@
     </ol>
 </section>
 <section class="content">
-    <div ng-show="loading()" class="alert alert-info" role="alert">Loading Sessions...</div>
-    <div ng-show="error()" class="alert alert-danger" role="alert">
-        Error Connecting. Do you want to <a ng-click="updateSessions()" class="alert-link">retry?</a>
-    </div>
-
-    <div ng-show="!ctrl.loading() && !ctrl.error()" class="row">
+    <div class="row">
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5>Request Book</h5>
                 </div>
                 <div class="panel-body">
-                    {{requestBookForm.$valid}}
                     <form id="requestBookForm" ng-submit="ctrl.requestBook()" role="form" novalidate>
                         <div class="form-group">
                             <label for="inputNameIdentifier">Name</label>
@@ -31,7 +25,7 @@
                         </div>
                         <div class="pull-right form-group">
                             <div>
-                                <button type="submit" class="btn btn-info">Request</button>
+                                <button type="submit" class="btn btn-info">Add Book</button>
                             </div>
                         </div>
                     </form>

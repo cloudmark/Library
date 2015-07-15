@@ -8,14 +8,23 @@ namespace Library.Models {
         [Key]
         [Column("LoanId")]
         public int Id {get; set; }
+
+        public int? BookId { get; set; }
+
+        public int? UserId { get; set; }
+
         [Required]
-        public Book Book {get; set; }
+        [ForeignKey("BookId")] // In this class
+        public virtual Book Book {get; set; }
+
         [Required]
+        [ForeignKey("UserId")] // In this class
         public User User {get; set; }
-        
+
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LoanStart {get; set; }
+
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LoanEnd { get; set; }

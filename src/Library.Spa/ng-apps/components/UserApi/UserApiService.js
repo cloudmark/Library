@@ -3,15 +3,15 @@ var Library;
 (function (Library) {
     var Services;
     (function (Services) {
-        var BookApiService = (function () {
-            function BookApiService($cacheFactory, $q, $http, urlResolver) {
+        var UserApiService = (function () {
+            function UserApiService($cacheFactory, $q, $http, urlResolver) {
                 this._inlineData = $cacheFactory.get("inlineData");
                 this._q = $q;
                 this._http = $http;
                 this._urlResolver = urlResolver;
             }
-            BookApiService.prototype.getBooks = function (page, pageSize, sortBy) {
-                var url = this._urlResolver.resolveUrl("~/api/book");
+            UserApiService.prototype.getUsers = function (page, pageSize, sortBy) {
+                var url = this._urlResolver.resolveUrl("~/api/user");
                 var query = {};
                 var querySeparator = "?";
                 if (page) {
@@ -39,19 +39,19 @@ var Library;
                     return this._http.get(url).then(function (result) { return result.data.Data; });
                 }
             };
-            BookApiService.prototype.getBook = function (bookId) {
-                var url = this._urlResolver.resolveUrl("~/api/book/" + bookId);
+            UserApiService.prototype.getUser = function (userId) {
+                var url = this._urlResolver.resolveUrl("~/api/user/" + userId);
                 return this._http.get(url).then(function (result) { return result.data.Data; });
             };
-            BookApiService.prototype.requestBook = function (book) {
-                var url = this._urlResolver.resolveUrl("~/api/book");
+            UserApiService.prototype.addUser = function (book) {
+                var url = this._urlResolver.resolveUrl("~/api/user");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
-            BookApiService.prototype.updateBook = function (book) {
-                var url = this._urlResolver.resolveUrl("~/api/book/" + book.Id);
-                this._http.put(url, book);
+            UserApiService.prototype.updateUser = function (user) {
+                var url = this._urlResolver.resolveUrl("~/api/user/" + user.Id);
+                this._http.put(url, user);
             };
-            return BookApiService;
+            return UserApiService;
         })();
     })(Services = Library.Services || (Library.Services = {}));
 })(Library || (Library = {}));
