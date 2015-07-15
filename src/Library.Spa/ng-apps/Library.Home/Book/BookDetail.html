@@ -13,7 +13,7 @@
                     <h5>Book {{ctrl.book.Id}}</h5>
                 </div>
                 <div class="panel-body">
-                    <form id="requestBookForm" ng-submit="ctrl.requestBook()" role="form" novalidate>
+                    <form id="requestBookForm" ng-submit="ctrl.updateBook()" role="form" novalidate>
                         <div class="form-group">
                             <label for="inputNameIdentifier">Name</label>
                             <input type="text" required data-ng-model="ctrl.book.Name" class="form-control" id="inputNameIdentifier"

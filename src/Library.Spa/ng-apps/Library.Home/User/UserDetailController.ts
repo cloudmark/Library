@@ -2,23 +2,37 @@
 
     interface IUserDetailViewModel {
         user: Models.IUser; 
-        getUser(): void; 
+        getUser(userId: number): void; 
         updateUser(): void;
+    }
+
+    interface IUserParams extends ng.route.IRouteParamsService {
+        userId: number;
     }
 
     class UserDetailController implements IUserDetailViewModel {
         private $scope: ng.IScope; 
         private userApi: Services.IUserApiService; 
-        public user:  Models.IUser; 
+        user: Models.IUser = {
+            Id: 0,
+            Name: "",
+            Surname: "",
+            Loans: []
+        };
        
-        constructor($scope: ng.IScope, userApi: Services.IUserApiService, $routeParams: ng.route.IRouteParamsService) {
+        constructor($scope: ng.IScope, userApi: Services.IUserApiService, $routeParams: IUserParams) {
             this.$scope = $scope; 
             this.userApi = userApi;
-            this.getUser();
+            this.getUser($routeParams.userId);
         }
 
-        getUser(): void {
-             // TODO: Implement this.
+        getUser(userId : number): void {
+            this.userApi.getUser(userId).then(user => {
+                this.user.Id = user.Id;
+                this.user.Name = user.Name;
+                this.user.Surname = user.Surname;
+                this.user.Loans = user.Loans;
+            });
         }
 
    

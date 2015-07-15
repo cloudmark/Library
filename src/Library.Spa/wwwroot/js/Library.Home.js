@@ -217,6 +217,10 @@ var Library;
                     return this._http.get(url).then(function (result) { return result.data.Data; });
                 }
             };
+            UserApiService.prototype.getUser = function (userId) {
+                var url = this._urlResolver.resolveUrl("~/api/user/" + userId);
+                return this._http.get(url).then(function (result) { return result.data.Data; });
+            };
             UserApiService.prototype.addUser = function (book) {
                 var url = this._urlResolver.resolveUrl("~/api/user");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
@@ -440,12 +444,6 @@ var Library;
                 controllerAs: "ctrl",
                 access: { requiresLogin: true }
             })
-                .when("/loan/:loanId", {
-                templateUrl: "ng-apps/Library.Home/Loan/LoanDetail.html",
-                controller: "Library.Home.Loan.LoanDetailController",
-                controllerAs: "ctrl",
-                access: { requiresLogin: true }
-            })
                 .when("/user", {
                 templateUrl: "ng-apps/Library.Home/User/User.html",
                 controller: "Library.Home.User.UserController",
@@ -568,37 +566,6 @@ var Library;
         })(Loan = Home.Loan || (Home.Loan = {}));
     })(Home = Library.Home || (Library.Home = {}));
 })(Library || (Library = {}));
-/// <reference path="..\..\Library.Home.Loan.ng.ts" />
-var Library;
-(function (Library) {
-    var Home;
-    (function (Home) {
-        var Loan;
-        (function (Loan) {
-            var LoanDetailController = (function () {
-                function LoanDetailController($scope, loanApi, $routeParams) {
-                    this.$scope = $scope;
-                    this.loanApi = loanApi;
-                    this.getLoan();
-                }
-                LoanDetailController.prototype.getLoan = function () {
-                    // TODO: Implement this.
-                };
-                LoanDetailController.prototype.updateLoan = function () {
-                    // TODO: Implement this.  
-                };
-                return LoanDetailController;
-            })();
-            angular.module("Library.Home.Loan")
-                .controller("Library.Home.Loan.LoanDetailController", [
-                "$scope",
-                "Library.Services.ILoanApiService",
-                "$routeParams",
-                LoanDetailController
-            ]);
-        })(Loan = Home.Loan || (Home.Loan = {}));
-    })(Home = Library.Home || (Library.Home = {}));
-})(Library || (Library = {}));
 var Library;
 (function (Library) {
     var Home;
@@ -627,7 +594,8 @@ var Library;
                     this.currentUser = {
                         Id: -1,
                         Name: "",
-                        Surname: ""
+                        Surname: "",
+                        Loans: []
                     };
                     this.$scope = $scope;
                     this.userApi = userApi;
@@ -651,7 +619,8 @@ var Library;
                         _this.currentUser = {
                             Id: -1,
                             Name: "",
-                            Surname: ""
+                            Surname: "",
+                            Loans: []
                         };
                         _this.users.push(user);
                     });
@@ -676,12 +645,24 @@ var Library;
         (function (User) {
             var UserDetailController = (function () {
                 function UserDetailController($scope, userApi, $routeParams) {
+                    this.user = {
+                        Id: 0,
+                        Name: "",
+                        Surname: "",
+                        Loans: []
+                    };
                     this.$scope = $scope;
                     this.userApi = userApi;
-                    this.getUser();
+                    this.getUser($routeParams.userId);
                 }
-                UserDetailController.prototype.getUser = function () {
-                    // TODO: Implement this.
+                UserDetailController.prototype.getUser = function (userId) {
+                    var _this = this;
+                    this.userApi.getUser(userId).then(function (user) {
+                        _this.user.Id = user.Id;
+                        _this.user.Name = user.Name;
+                        _this.user.Surname = user.Surname;
+                        _this.user.Loans = user.Loans;
+                    });
                 };
                 UserDetailController.prototype.updateUser = function () {
                     // TODO: Implement this.  

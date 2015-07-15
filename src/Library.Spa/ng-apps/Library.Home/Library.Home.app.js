@@ -38,11 +38,6 @@ var Library;
                 controller: "Library.Home.Loan.LoanController",
                 controllerAs: "ctrl",
                 access: { requiresLogin: true }
-            }).when("/loan/:loanId", {
-                templateUrl: "ng-apps/Library.Home/Loan/LoanDetail.html",
-                controller: "Library.Home.Loan.LoanDetailController",
-                controllerAs: "ctrl",
-                access: { requiresLogin: true }
             }).when("/user", {
                 templateUrl: "ng-apps/Library.Home/User/User.html",
                 controller: "Library.Home.User.UserController",

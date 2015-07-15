@@ -3,7 +3,8 @@
 module Library.Services {
 	export interface IUserApiService {
         getUsers(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IUser>>;
-        addUser(user: Models.IUser): ng.IPromise<Models.IUser>; 
+        addUser(user: Models.IUser): ng.IPromise<Models.IUser>;
+        getUser(userId: number): ng.IPromise<Models.IUser>;
 	}
 
     class UserApiService implements IUserApiService {
@@ -54,6 +55,11 @@ module Library.Services {
             } else {
                 return this._http.get(url).then(result => result.data.Data); 
             }
+        }
+
+        public getUser(userId: number): ng.IPromise<Models.IUser> {
+            var url = this._urlResolver.resolveUrl("~/api/user/" + userId);
+            return this._http.get(url).then(result => result.data.Data);
         }
 
         public addUser(book: Models.IUser): ng.IPromise<Models.IUser> {

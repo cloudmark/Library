@@ -58,11 +58,11 @@
                         <tr ng-repeat="loan in ctrl.loans">
 
                             <td><a ng-href="/#/loan/{{loan.Id}}">/{{loan.Id}}</a></td>
-                            <td>{{loan.Book.Name}}</td>
-                            <td>{{loan.User.Name}}</td>
-                            <td>{{loan.User.Surname}}</td>
-                            <td>{{loan.LoanStart}}</td>
-                            <td>{{loan.LoanEnd}}</td>
+                            <td><a ng-href="/#/book/{{loan.Book.Id}}">{{loan.Book.Name}}</a></td>
+                            <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Name}}</a></td>
+                            <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Surname}}</a></td>
+                            <td>{{loan.LoanStart | date}}</td>
+                            <td>{{loan.LoanEnd | date}}</td>
                         </tr>
                         </tbody>
                     </table>

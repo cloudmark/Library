@@ -21,7 +21,8 @@
         public currentUser: Models.IUser = {
             Id: -1,
             Name: "",
-            Surname: ""
+            Surname: "",
+            Loans: []
         };
 
         constructor($scope: ng.IScope, userApi: Services.IUserApiService) {
@@ -48,7 +49,8 @@
                 this.currentUser = {
                     Id: -1,
                     Name: "",
-                    Surname: ""
+                    Surname: "",
+                    Loans: []
                 };
                 this.users.push(user);
             });
