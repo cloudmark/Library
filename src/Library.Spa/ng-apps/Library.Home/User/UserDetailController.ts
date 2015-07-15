@@ -35,10 +35,8 @@
             });
         }
 
-   
         updateUser(): void {
-            // TODO: Implement this.  
+            this.userApi.updateUser(this.user);
         }
-    
     }
 }

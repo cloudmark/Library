@@ -15,7 +15,6 @@ var Library;
                     this.$scope = $scope;
                     this.$routeParams = $routeParams;
                     this.bookApi = bookApi;
-                    debugger;
                     this.getBook($routeParams.bookId);
                 }
                 BookDetailController.prototype.getBook = function (bookId) {
@@ -28,7 +27,7 @@ var Library;
                     });
                 };
                 BookDetailController.prototype.updateBook = function () {
-                    // TODO: Implement this.  
+                    this.bookApi.updateBook(this.book);
                 };
                 return BookDetailController;
             })();

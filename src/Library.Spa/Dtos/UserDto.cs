@@ -16,8 +16,10 @@ namespace Library.Spa.Dtos {
         public List<LoanResultDto> Loans { get; set; }
     }
 
-    public class UserChangeDto {
-        
+    public class UserChangeDto
+    {
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 	
 }

@@ -53,6 +53,5 @@
                 this.books.push(book);
             });
         }
-    
     }
 }

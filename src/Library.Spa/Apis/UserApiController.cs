@@ -57,14 +57,35 @@ namespace Library.Spa.Apis
             return apiResult; 
         }
 
+        [HttpPut("{userId:int}")]
+        public async Task<ApiResult> UpdateUser(int userId, [FromBody]UserChangeDto userDto)
+        {
+            if (!ModelState.IsValid)
+                return new ApiResult(ModelState);
+
+            var user = await _userService.Details(userId);
+            if (user == null)
+                return new ApiResult
+                {
+                    StatusCode = 404,
+                    Message = $"The user with ID {userId} was not found."
+                };
+
+            Mapper.Map(userDto, user);
+            await _userService.Update(user);
+
+            return new ApiResult
+            {
+                Data = Mapper.Map(user, new UserDetailResultDto())
+            };
+        }
+
         [HttpDelete("{userId:int}")]
         public async Task<ApiResult> DeleteUser(int userId)
         {
             await _userService.DeleteUser(userId);
             return new ApiResult();
         }
-
-
     }
 
 }

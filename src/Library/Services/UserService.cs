@@ -14,6 +14,7 @@ namespace Library.Services
         Task<List<User>> All();
         Task<User> Details(int userId);
         Task<int> CreateUser(User b);
+        Task Update(User user);
         Task DeleteUser(int userId);
     }
 
@@ -48,6 +49,11 @@ namespace Library.Services
         {
             _libraryContext.LibraryUsers.Add(b);
             return await _libraryContext.SaveChangesAsync();
+        }
+
+        public async Task Update(User user)
+        {
+            await _libraryContext.SaveChangesAsync();
         }
 
         public async Task DeleteUser(int userId)

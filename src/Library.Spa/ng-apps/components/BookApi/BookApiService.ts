@@ -5,6 +5,7 @@ module Library.Services {
         getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
         getBook(bookId: number): ng.IPromise<Models.IBook>;
         requestBook(book: Models.IBook): ng.IPromise<Models.IBook>; 
+        updateBook(book: Models.IBook): void;
 	}
 
     class BookApiService implements IBookApiService {
@@ -64,7 +65,12 @@ module Library.Services {
 
         public requestBook(book: Models.IBook): ng.IPromise<Models.IBook> {
             var url = this._urlResolver.resolveUrl("~/api/book");
-            return this._http.post(url, book).then(result => result.data.Data);    
+            return this._http.post(url, book).then(result => result.data.Data);
+        }
+
+        public updateBook(book: Models.IBook): void {
+            var url = this._urlResolver.resolveUrl("~/api/book/" + book.Id);
+            this._http.put(url, book);
         }
 	}
 }

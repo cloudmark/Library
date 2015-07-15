@@ -47,6 +47,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/user");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            UserApiService.prototype.updateUser = function (user) {
+                var url = this._urlResolver.resolveUrl("~/api/user/" + user.Id);
+                this._http.put(url, user);
+            };
             return UserApiService;
         })();
     })(Services = Library.Services || (Library.Services = {}));

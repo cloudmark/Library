@@ -47,6 +47,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/book");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            BookApiService.prototype.updateBook = function (book) {
+                var url = this._urlResolver.resolveUrl("~/api/book/" + book.Id);
+                this._http.put(url, book);
+            };
             return BookApiService;
         })();
     })(Services = Library.Services || (Library.Services = {}));

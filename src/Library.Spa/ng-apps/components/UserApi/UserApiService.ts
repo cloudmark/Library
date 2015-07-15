@@ -5,6 +5,7 @@ module Library.Services {
         getUsers(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IUser>>;
         addUser(user: Models.IUser): ng.IPromise<Models.IUser>;
         getUser(userId: number): ng.IPromise<Models.IUser>;
+        updateUser(user: Models.IUser): void;
 	}
 
     class UserApiService implements IUserApiService {
@@ -65,6 +66,11 @@ module Library.Services {
         public addUser(book: Models.IUser): ng.IPromise<Models.IUser> {
             var url = this._urlResolver.resolveUrl("~/api/user");
             return this._http.post(url, book).then(result => result.data.Data);    
+        }
+
+        public updateUser(user: Models.IUser): void {
+            var url = this._urlResolver.resolveUrl("~/api/user/" + user.Id);
+            this._http.put(url, user);
         }
 	}
 }

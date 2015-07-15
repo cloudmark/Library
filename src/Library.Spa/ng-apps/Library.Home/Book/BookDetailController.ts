@@ -25,7 +25,6 @@
             this.$scope = $scope;
             this.$routeParams = $routeParams; 
             this.bookApi = bookApi;
-            debugger;
             this.getBook($routeParams.bookId);
         }
 
@@ -39,8 +38,7 @@
         }
    
         updateBook(): void {
-            // TODO: Implement this.  
+            this.bookApi.updateBook(this.book);
         }
-    
     }
 }

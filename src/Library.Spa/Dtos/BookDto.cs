@@ -20,7 +20,8 @@ namespace Library.Spa.Dtos {
     }
 
     [ModelMetadataType(typeof(Book))]
-    public class BookChangeDto {
+    public class BookChangeDto
+    {
         public string Name {get; set; }
 		public string Description {get; set;}
 	}

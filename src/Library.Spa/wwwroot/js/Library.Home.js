@@ -58,6 +58,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/book");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            BookApiService.prototype.updateBook = function (book) {
+                var url = this._urlResolver.resolveUrl("~/api/book/" + book.Id);
+                this._http.put(url, book);
+            };
             return BookApiService;
         })();
         angular.module("Library.Services")
@@ -225,6 +229,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/user");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            UserApiService.prototype.updateUser = function (user) {
+                var url = this._urlResolver.resolveUrl("~/api/user/" + user.Id);
+                this._http.put(url, user);
+            };
             return UserApiService;
         })();
         angular.module("Library.Services")
@@ -325,7 +333,6 @@ var Library;
                     this.$scope = $scope;
                     this.$routeParams = $routeParams;
                     this.bookApi = bookApi;
-                    debugger;
                     this.getBook($routeParams.bookId);
                 }
                 BookDetailController.prototype.getBook = function (bookId) {
@@ -338,7 +345,7 @@ var Library;
                     });
                 };
                 BookDetailController.prototype.updateBook = function () {
-                    // TODO: Implement this.  
+                    this.bookApi.updateBook(this.book);
                 };
                 return BookDetailController;
             })();
@@ -665,7 +672,7 @@ var Library;
                     });
                 };
                 UserDetailController.prototype.updateUser = function () {
-                    // TODO: Implement this.  
+                    this.userApi.updateUser(this.user);
                 };
                 return UserDetailController;
             })();
