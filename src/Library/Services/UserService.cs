@@ -39,7 +39,9 @@ namespace Library.Services
 
         public async Task<User> Details(int userId)
         {
-            return await _libraryContext.LibraryUsers.Include(u => u.Loans).Where(u => u.Id == userId).SingleOrDefaultAsync();
+            return await _libraryContext.LibraryUsers
+                .Include(u => u.Loans)
+                .Where(u => u.Id == userId).SingleOrDefaultAsync();
         }
 
         public async Task<int> CreateUser(User b)

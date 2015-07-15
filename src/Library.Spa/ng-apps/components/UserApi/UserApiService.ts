@@ -1,12 +1,12 @@
 /// <reference path="../../references.ts" /> 
 
 module Library.Services {
-	export interface IBookApiService {
-        getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
-        requestBook(book: Models.IBook): ng.IPromise<Models.IBook>; 
+	export interface IUserApiService {
+        getUsers(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IUser>>;
+        addUser(user: Models.IUser): ng.IPromise<Models.IUser>; 
 	}
 
-    class BookApiService implements IBookApiService {
+    class UserApiService implements IUserApiService {
 		private _inlineData: ng.ICacheObject;
         private _q: ng.IQService;
         private _http: ng.IHttpService;
@@ -22,8 +22,8 @@ module Library.Services {
             this._urlResolver = urlResolver;
         }
 
-        public getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>> {
-            var url = this._urlResolver.resolveUrl("~/api/book");
+        public getUsers(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IUser>> {
+            var url = this._urlResolver.resolveUrl("~/api/user");
             var query: any = {};
             var querySeparator = "?";
             if (page) {
@@ -56,8 +56,8 @@ module Library.Services {
             }
         }
 
-        public requestBook(book: Models.IBook): ng.IPromise<Models.IBook> {
-            var url = this._urlResolver.resolveUrl("~/api/book");
+        public addUser(book: Models.IUser): ng.IPromise<Models.IUser> {
+            var url = this._urlResolver.resolveUrl("~/api/user");
             return this._http.post(url, book).then(result => result.data.Data);    
         }
 	}

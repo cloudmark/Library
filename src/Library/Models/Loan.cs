@@ -24,6 +24,7 @@ namespace Library.Models {
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LoanStart {get; set; }
+
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LoanEnd { get; set; }

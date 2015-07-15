@@ -15,7 +15,6 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Runtime;
 using Spa.Extensions.Extenstions;
-using Microsoft.AspNet.Authentication.OAuth;
 
 namespace Library.Spa
 {
@@ -73,6 +72,12 @@ namespace Library.Spa
             Mapper.CreateMap<Book, BookResultDto>();
             Mapper.CreateMap<Book, BookDetailedResultDto>(); 
             Mapper.CreateMap<BookChangeDto, Book>();
+            Mapper.CreateMap<User, UserResultDto>();
+            Mapper.CreateMap<User, UserDetailResultDto>();
+            Mapper.CreateMap<UserChangeDto, User>();
+            Mapper.CreateMap<Loan, LoanResultDto>();
+            Mapper.CreateMap<Loan, LoanDetailsResultDto>();
+            Mapper.CreateMap<LoanChangeDto, Loan>();
 
 
         }
@@ -98,8 +103,6 @@ namespace Library.Spa
             app.UseMvc();
 
             app.UseIdentity();
-
-            app.UseOAuthAuthentication
 
             // Add SPA
             app.UseSpa(new SpaOptions() {DebugMode = true}); 

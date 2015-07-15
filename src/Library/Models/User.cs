@@ -10,10 +10,10 @@ namespace Library.Models {
         public int Id {get; set;}
         [Required]
         public string Name {get; set; }
-
         [Required]
         public string Surname {get; set; }
 
-	    public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
+        [InverseProperty("LoanId")]
+        public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
 	}
 }

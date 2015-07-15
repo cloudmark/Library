@@ -9,7 +9,7 @@ using Library.Spa.Infrastructure;
 using Microsoft.AspNet.Mvc;
 
 namespace Library.Spa.Apis {
-	[Route("api/books")]
+	[Route("api/book")]
 	public class BookApiController: Controller{
 		private readonly IBookService _bookService; 
 		
@@ -84,6 +84,13 @@ namespace Library.Spa.Apis {
             {
                 Data = Mapper.Map(book, new BookDetailedResultDto())
             };
+        }
+
+        [HttpDelete("{bookId:int}")]
+        public async Task<ApiResult> DeleteBook(int bookId)
+        {
+            await _bookService.DeleteBook(bookId);
+            return new ApiResult();
         }
 
 

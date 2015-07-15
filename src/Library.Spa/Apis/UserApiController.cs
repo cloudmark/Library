@@ -1,21 +1,60 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Library.Models;
+using Library.Services;
+using Library.Spa.Dtos;
+using Library.Spa.Infrastructure;
 using Microsoft.AspNet.Mvc;
 
-namespace Library.Spa.Apis {
-	[Route("api/user")]
-	public class UserApiController: Controller{
-		private readonly LibraryContext _libraryContext;
-		
-		public UserApiController(LibraryContext libraryContext){
-			_libraryContext = libraryContext;
-		}
-		
-		[HttpGet]
-		public IEnumerable<User> GetAll(){
-			// return _libraryContext.LibraryUsers.All();
-		    return new User[] {};
-		}
-	}
-	
+namespace Library.Spa.Apis
+{
+    [Route("api/user")]
+    public class UserApiController : Controller
+    {
+        private readonly IUserService _userService;
+
+        public UserApiController(IUserService userService)
+        {
+            this._userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<ApiResult> GetAll()
+        {
+            var loans = await this._userService.All();
+            return new ApiResult
+            {
+                Data = Mapper.Map<IEnumerable<UserResultDto>>(loans)
+            };
+        }
+
+        [HttpGet("{userId:int}")]
+        [NoCache]
+        public async Task<ApiResult> Details(int userId)
+        {
+            var user = await _userService.Details(userId);
+            if (user == null)
+                return new ApiResult
+                {
+                    StatusCode = 404,
+                    Message = $"The User with ID {userId} was not found."
+                };
+
+            return new ApiResult
+            {
+                Data = Mapper.Map(user, new UserDetailResultDto())
+            };
+        }
+
+        [HttpDelete("{userId:int}")]
+        public async Task<ApiResult> DeleteUser(int userId)
+        {
+            await _userService.DeleteUser(userId);
+            return new ApiResult();
+        }
+
+
+    }
+
 }

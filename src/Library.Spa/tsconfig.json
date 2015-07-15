@@ -7,11 +7,13 @@
     },
     "files": [
         "ng-apps/components/BookApi/BookApiService.ng.ts",
+        "ng-apps/components/LoanApi/LoanApiService.ng.ts",
         "ng-apps/components/Models/IBook.ng.ts",
         "ng-apps/components/Models/ILoan.ng.ts",
         "ng-apps/components/Models/IPagedList.ng.ts",
         "ng-apps/components/Models/IUser.ng.ts",
         "ng-apps/components/UrlResolver/UrlResolverService.ng.ts",
+        "ng-apps/components/UserApi/UserApiService.ng.ts",
         "ng-apps/Library.Home/Book/BookController.ng.ts",
         "ng-apps/Library.Home/Home/HomeController.ng.ts",
         "ng-apps/Library.Home/Library.Home.app.ng.ts",
