@@ -120,6 +120,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/loan");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            LoanApiService.prototype.endLoan = function (loanId) {
+                var url = this._urlResolver.resolveUrl("~/api/loan/" + loanId);
+                this._http.delete(url);
+            };
             return LoanApiService;
         })();
         angular.module("Library.Services")
@@ -559,6 +563,10 @@ var Library;
                         };
                         _this.loans.push(loan);
                     });
+                };
+                LoanController.prototype.endLoan = function (loanId) {
+                    this.loanApi.endLoan(loanId);
+                    this.refreshLoans();
                 };
                 return LoanController;
             })();

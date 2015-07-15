@@ -3,7 +3,8 @@
 module Library.Services {
 	export interface ILoanApiService {
         getLoans(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.ILoan>>;
-        addLoan(book: Models.ILoanTrimmed): ng.IPromise<Models.ILoan>; 
+        addLoan(book: Models.ILoanTrimmed): ng.IPromise<Models.ILoan>;
+        endLoan(loan: number): void;
 	}
 
     class LoanApiService implements ILoanApiService {
@@ -59,6 +60,11 @@ module Library.Services {
         public addLoan(book: Models.ILoanTrimmed): ng.IPromise<Models.ILoan> {
             var url = this._urlResolver.resolveUrl("~/api/loan");
             return this._http.post(url, book).then(result => result.data.Data);    
+        }
+
+        public endLoan(loanId: number): void {
+            var url = this._urlResolver.resolveUrl("~/api/loan/" + loanId);
+            this._http.delete(url);
         }
 	}
 }

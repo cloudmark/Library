@@ -5,7 +5,7 @@
         users: Array<Models.IUser>;
         books: Array<Models.IBook>;
         
-        refreshLoans(): void
+        refreshLoans(): void;
         clearFilters(): void;
         addLoan(): void;
     }
@@ -93,5 +93,9 @@
             });
         }
 
+        endLoan(loanId: number): void {
+            this.loanApi.endLoan(loanId);
+            this.refreshLoans();
+        }
     }
 }

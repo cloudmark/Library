@@ -64,8 +64,8 @@ namespace Library.Spa.Apis {
             };
         }
 
-        [HttpDelete]
-        public async Task<ApiResult> ReturnBook(int userId, int bookId)
+        [HttpDelete("{loanId:int}")]
+        public async Task<ApiResult> ReturnBook(int loanId)
         {
             if (!ModelState.IsValid)
             {
@@ -73,13 +73,8 @@ namespace Library.Spa.Apis {
             }
 
             var book = new Book();
-            bool saved = await _loanService.ReturnBook(userId, bookId);
-            return new ApiResult
-            {
-                Data = Mapper.Map(book, new BookDetailedResultDto())
-            };
+            bool saved = await _loanService.ReturnBook(loanId);
+            return new ApiResult();
         }
-
     }
-	
 }
