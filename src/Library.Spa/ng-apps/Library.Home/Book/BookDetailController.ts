@@ -2,27 +2,41 @@
 
     interface IBookDetailViewModel {
         book: Models.IBook; 
-        getBook(): void; 
+        getBook(bookId: number): void; 
         updateBook(): void;
+    }
+
+    interface IBookParams extends ng.route.IRouteParamsService {
+        bookId : number;
     }
 
     class BookDetailController implements IBookDetailViewModel  {
         private $scope: ng.IScope; 
         private bookApi: Services.IBookApiService; 
-        public book: Models.IBook; 
+        book: Models.IBook = {
+            Id: 0,
+            Name: "",
+            Description: "",
+            Loans: []
+        };
         private $routeParams: ng.route.IRouteParamsService; 
        
-        constructor($scope: ng.IScope, bookApi: Services.IBookApiService, $routeParams: ng.route.IRouteParamsService) {
+        constructor($scope: ng.IScope, bookApi: Services.IBookApiService, $routeParams: IBookParams) {
             this.$scope = $scope;
             this.$routeParams = $routeParams; 
             this.bookApi = bookApi;
-            // this.getBook($routeParams.bookId);
+            debugger;
+            this.getBook($routeParams.bookId);
         }
 
-        getBook(): void {
-             // TODO: Implement this.
+        getBook(bookId : number): void {
+            this.bookApi.getBook(bookId).then(book => {
+                this.book.Id = book.Id;
+                this.book.Name = book.Name;
+                this.book.Description = book.Description;
+                this.book.Loans = book.Loans;
+            });
         }
-
    
         updateBook(): void {
             // TODO: Implement this.  

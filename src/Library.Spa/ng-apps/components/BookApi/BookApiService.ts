@@ -3,6 +3,7 @@
 module Library.Services {
 	export interface IBookApiService {
         getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
+        getBook(bookId: number): ng.IPromise<Models.IBook>;
         requestBook(book: Models.IBook): ng.IPromise<Models.IBook>; 
 	}
 
@@ -54,6 +55,11 @@ module Library.Services {
             } else {
                 return this._http.get(url).then(result => result.data.Data); 
             }
+        }
+
+        public getBook(bookId: number): ng.IPromise<Models.IBook> {
+            var url = this._urlResolver.resolveUrl("~/api/book/" + bookId);
+            return this._http.get(url).then(result => result.data.Data);
         }
 
         public requestBook(book: Models.IBook): ng.IPromise<Models.IBook> {

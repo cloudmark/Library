@@ -19,7 +19,8 @@
         public currentBook: Models.IBook = {
             Id: -1,
             Name: "",
-            Description: ""
+            Description: "",
+            Loans: []
         };
 
         constructor($scope: ng.IScope, bookApi: Services.IBookApiService) {
@@ -46,7 +47,8 @@
                 this.currentBook = {
                     Id: -1,
                     Name: "",
-                    Description: ""
+                    Description: "",
+                    Loans: []
                 };
                 this.books.push(book);
             });

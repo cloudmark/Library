@@ -11,7 +11,7 @@ var Library;
                 this._urlResolver = urlResolver;
             }
             BookApiService.prototype.getBooks = function (page, pageSize, sortBy) {
-                var url = this._urlResolver.resolveUrl("~/api/books");
+                var url = this._urlResolver.resolveUrl("~/api/book");
                 var query = {};
                 var querySeparator = "?";
                 if (page) {
@@ -39,8 +39,12 @@ var Library;
                     return this._http.get(url).then(function (result) { return result.data.Data; });
                 }
             };
+            BookApiService.prototype.getBook = function (bookId) {
+                var url = this._urlResolver.resolveUrl("~/api/book/" + bookId);
+                return this._http.get(url).then(function (result) { return result.data.Data; });
+            };
             BookApiService.prototype.requestBook = function (book) {
-                var url = this._urlResolver.resolveUrl("~/api/books");
+                var url = this._urlResolver.resolveUrl("~/api/book");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
             return BookApiService;

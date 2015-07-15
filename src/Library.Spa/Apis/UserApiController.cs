@@ -13,10 +13,12 @@ namespace Library.Spa.Apis
     public class UserApiController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IBookService _bookService;
 
-        public UserApiController(IUserService userService)
+        public UserApiController(IUserService userService, IBookService bookService)
         {
             this._userService = userService;
+            this._bookService = bookService;
         }
 
         [HttpGet]
@@ -41,10 +43,18 @@ namespace Library.Spa.Apis
                     Message = $"The User with ID {userId} was not found."
                 };
 
-            return new ApiResult
+            var userDetails = new UserDetailResultDto(); 
+            var apiResult =  new ApiResult
             {
-                Data = Mapper.Map(user, new UserDetailResultDto())
+                Data = Mapper.Map(user, userDetails)
             };
+            foreach (var u in userDetails.Loans)
+            {
+                var book = await _bookService.Details(u.BookId);
+                u.BookName = book.Name;
+                u.UserFullName = $"{user.Name} {user.Surname}";
+            }
+            return apiResult; 
         }
 
         [HttpDelete("{userId:int}")]

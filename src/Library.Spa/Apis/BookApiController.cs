@@ -11,11 +11,14 @@ using Microsoft.AspNet.Mvc;
 namespace Library.Spa.Apis {
 	[Route("api/book")]
 	public class BookApiController: Controller{
-		private readonly IBookService _bookService; 
-		
-		public BookApiController(IBookService bookService){
-			_bookService = bookService; 
-		}
+		private readonly IBookService _bookService;
+        private readonly IUserService _userService;
+
+        public BookApiController(IBookService bookService, IUserService userService)
+        {
+			_bookService = bookService;
+		    _userService = userService; 
+        }
 		
 		[HttpGet]
         [NoCache]
@@ -40,10 +43,21 @@ namespace Library.Spa.Apis {
                     Message = $"The book with ID {bookId} was not found."
                 };
 
-            return new ApiResult
+            var bookDetails = new BookDetailedResultDto();
+		    var apiResult = new ApiResult
 		    {
-		        Data = Mapper.Map(book, new BookDetailedResultDto())
-		    };
+                Data = Mapper.Map(book, bookDetails)
+            };
+
+            foreach (var l in bookDetails.Loans)
+            {
+                var user = await _userService.Details(l.BookId);
+                l.UserFullName = $"{user.Name} {user.Surname}";
+                l.BookName = book.Name;
+            }
+
+		    return apiResult;
+
 		}
 
         [HttpPost]

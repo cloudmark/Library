@@ -7,7 +7,9 @@ namespace Library.Spa.Dtos {
     {
         public int Id { get; set; }
         public int BookId { get; set; }
+        public string BookName { get; set; }
         public int UserId { get; set; }
+        public string UserFullName { get; set; }
         public DateTime LoanStart { get; set; }
         public DateTime LoanEnd { get; set; }
     }

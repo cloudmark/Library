@@ -7,6 +7,16 @@ module Library.Models {
         LoanEnd: Date;
     }
 
+    export interface ILoanSummary {
+        Id: number;
+        BookId: number;
+        UserFullName: string;
+        UserId: number;
+        LoanEnd: Date;
+        LoanStart: Date;
+        
+    }
+
     export interface ILoanTrimmed {
         BookId: number; 
         UserId: number; 
