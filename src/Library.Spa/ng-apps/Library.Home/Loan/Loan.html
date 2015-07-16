@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
 <!--                            (ctrl.users | filter: {Id: ctrl.filters.Id, Name: ctrl.filters.Name, Surname: ctrl.filters.Surname}) track by user.Id-->
-                        <tr ng-repeat="loan in ctrl.loans">
+                        <tr ng-repeat="loan in filteredLoans = (ctrl.loans | filter: {Id: ctrl.filters.Id, Book:{Name: ctrl.filters.BookName}, User:{Name: ctrl.filters.UserName, Surname: ctrl.filters.UserSurname}}) track by loan.Id">
 
                             <td><a ng-href="/#/loan/{{loan.Id}}">/{{loan.Id}}</a></td>
                             <td><a ng-href="/#/book/{{loan.Book.Id}}">{{loan.Book.Name}}</a></td>
@@ -63,6 +63,7 @@
                             <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Surname}}</a></td>
                             <td>{{loan.LoanStart | date}}</td>
                             <td>{{loan.LoanEnd | date}}</td>
+                            <td><a ng-click="ctrl.endLoan(loan.Id)" ng-hide="ctrl.isPast(loan.LoanEnd)">Return</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -80,19 +81,24 @@
                 <div class="panel-body">
                     <form role="form">
                         <div class="form-group">
-                            <label for="inputUserIdentifier">UserId</label>
-                            <input type="text"  class="form-control" id="inputUserIdentifier"
-                                   placeholder="User Identifier">
+                            <label for="loanIdFilterField">Loan Identifier</label>
+                            <input type="text"  class="form-control" id="loanIdFilterField" data-ng-model="ctrl.filters.Id"
+                                   placeholder="Loan Identifier">
                         </div>
                         <div class="form-group">
-                            <label for="inputNameIdentifier">Name</label>
-                            <input type="text" class="form-control" id="inputNameIdentifier"
-                                   placeholder="Name">
+                            <label for="bookNameFilterField">Book Name</label>
+                            <input type="text" class="form-control" id="bookNameFilterField" data-ng-model="ctrl.filters.BookName"
+                                   placeholder="Book Name">
                         </div>
                         <div class="form-group">
-                            <label for="inputSurnameIdentifier">Surname</label>
-                            <input type="text" class="form-control" id="inputSurnameIdentifier"
-                                   placeholder="Surname">
+                            <label for="userNameFilterField">User Name</label>
+                            <input type="text" class="form-control" id="userNameFilterField" data-ng-model="ctrl.filters.UserName"
+                                   placeholder="User Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="userSurnameFilterField">User Surname</label>
+                            <input type="text" class="form-control" id="userSurnameFilterField" data-ng-model="ctrl.filters.UserSurname"
+                                   placeholder="User Surname">
                         </div>
                         <div class="pull-right form-group">
                             <div>

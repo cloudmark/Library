@@ -23,4 +23,8 @@ module Library.Models {
         UserId: number; 
         Days: number;
     }
+
+    export interface ILoanTrimmedWithId extends ILoanTrimmed {
+        Id: number;
+    }
 }

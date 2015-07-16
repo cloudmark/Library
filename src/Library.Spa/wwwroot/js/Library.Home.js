@@ -120,6 +120,10 @@ var Library;
                 var url = this._urlResolver.resolveUrl("~/api/loan");
                 return this._http.post(url, book).then(function (result) { return result.data.Data; });
             };
+            LoanApiService.prototype.endLoan = function (loanId) {
+                var url = this._urlResolver.resolveUrl("~/api/loan/" + loanId);
+                return this._http.delete(url).then(function (result) { return result.data; });
+            };
             return LoanApiService;
         })();
         angular.module("Library.Services")
@@ -492,6 +496,7 @@ var Library;
         (function (Loan) {
             var LoanController = (function () {
                 function LoanController($scope, loanApi, userApi, bookApi) {
+                    this.now = new Date();
                     this.loans = [];
                     this.users = [];
                     this.books = [];
@@ -520,7 +525,11 @@ var Library;
                     var _this = this;
                     this.loanApi.getLoans().then(function (loans) {
                         _this.loans.length = 0;
-                        _this.loans.push.apply(_this.loans, loans);
+                        loans.forEach(function (l) {
+                            l.LoanEnd = new Date(l.LoanEnd);
+                            l.LoanStart = new Date(l.LoanStart);
+                            _this.loans.push(l);
+                        });
                     });
                 };
                 LoanController.prototype.refreshUsers = function () {
@@ -559,6 +568,16 @@ var Library;
                         };
                         _this.loans.push(loan);
                     });
+                };
+                LoanController.prototype.endLoan = function (loanId) {
+                    var _this = this;
+                    this.loanApi.endLoan(loanId).then(function () {
+                        _this.now = new Date();
+                        _this.refreshLoans();
+                    });
+                };
+                LoanController.prototype.isPast = function (endDate) {
+                    return endDate < this.now;
                 };
                 return LoanController;
             })();

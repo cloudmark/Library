@@ -39,8 +39,8 @@ namespace Library.Models
         };
 
         private static readonly Loan[] loans = {
-            new Loan { Book = books.First(), User = users.First(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
-            new Loan { Book = books.Last(), User = users.Last(), LoanStart = DateTime.Now, LoanEnd = DateTime.Now },
+            new Loan { Book = books.First(), User = users.First(), LoanStart = DateTime.UtcNow, LoanEnd = DateTime.UtcNow.AddDays(7) },
+            new Loan { Book = books.Last(), User = users.Last(), LoanStart = DateTime.UtcNow, LoanEnd = DateTime.Now.AddDays(7) },
         };
 
         public static async Task InitializeLibraryDatabaseAsync(IServiceProvider serviceProvider)
