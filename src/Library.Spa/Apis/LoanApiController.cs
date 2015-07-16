@@ -11,7 +11,7 @@ using Library.Spa.Infrastructure;
 using Library.Spa.Dtos;
 
 namespace Library.Spa.Apis {
-	[Route("api/loan")]
+	[Route("loan")]
 	public class LoanApiController: Controller{
 		private readonly ILoanService _loanService;
 		
