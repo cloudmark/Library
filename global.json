@@ -1,6 +1,4 @@
 {
-    "projects": [ "src", 
-    	"C:/Dev/Experiments/Security/src/Microsoft.AspNet.Authentication.OAuthBearer",
-    	"C:/Dev/Experiments/Security/src/Microsoft.AspNet.Authentication"
+    "projects": [ "src"
      ]
 }
