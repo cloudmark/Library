@@ -9,7 +9,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Library.Spa.Apis
 {
-    [Route("api/user")]
+    [Route("user")]
     public class UserApiController : Controller
     {
         private readonly IUserService _userService;

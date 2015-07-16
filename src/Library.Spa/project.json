@@ -1,64 +1,68 @@
 {
-    "version": "1.0.0-*",
-    "webroot": "wwwroot",
-    "exclude": [
-        "wwwroot",
-        "bower_components",
-        "node_modules",
-        "grunt"
-    ],
-    "packExclude": [
-        "bower.json",
-        "package.json",
-        "gruntfile.js",
-        "bower_components",
-        "node_modules",
-        "grunt"
-    ],
-    "authors": [
-        "Mark Galea"
-    ],
-    "description": "Library Single Page Application",
-    "compilationOptions": {
-        "define": [
-            "DEBUG",
-            "TRACE"
-        ]
-    },
-    "dependencies": {
-        "Kestrel": "1.0.0-*",
-      "Microsoft.AspNet.Authentication.Cookies": "1.0.0-*",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
-        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-*",
-        "Microsoft.AspNet.Mvc": "6.0.0-*",
-        "Microsoft.AspNet.Server.IIS": "1.0.0-*",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
-        "Microsoft.AspNet.Session": "1.0.0-*",
-        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-*",
-        "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-*",
-        "Microsoft.Framework.Configuration.Json": "1.0.0-*",
-        "Microsoft.Framework.Logging.Console": "1.0.0-*",
-        "EntityFramework7.Commands": "7.0.0-*",
-        "Newtonsoft.Json": "7.0.1-*",
-        "AutoMapper": "4.0.0-*",
-        "Spa.Extensions": "1.0.0-beta6",
-        "Library": ""
-    },
-    "commands": {
-        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",
-        "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5004"
-    },
-    "scripts": {
-        "postrestore": [ "npm install" ],
-        "prepare": [ "grunt bower:install" ]
-    },
-    "frameworks": {
-        "dnx451": {
-            "dependencies": {}
-        },
-        "dnxcore50": {
-            "dependencies": {}
-        }
+  "version": "1.0.0-*",
+  "webroot": "wwwroot",
+  "exclude": [
+    "wwwroot",
+    "bower_components",
+    "node_modules",
+    "grunt"
+  ],
+  "packExclude": [
+    "bower.json",
+    "package.json",
+    "gruntfile.js",
+    "bower_components",
+    "node_modules",
+    "grunt"
+  ],
+  "authors": [
+    "Mark Galea"
+  ],
+  "description": "Library Single Page Application",
+  "compilationOptions": {
+    "define": [
+      "DEBUG",
+      "TRACE"
+    ]
+  },
+  "dependencies": {
+    "Microsoft.IdentityModel.Protocol.Extensions": "2.0.0-*",
+    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-*",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-*",
+    "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-*",
+    "Microsoft.AspNet.Mvc": "6.0.0-*",
+    "Microsoft.AspNet.Authentication.OAuthBearer": "1.0.0-*",
+    "Microsoft.AspNet.Server.IIS": "1.0.0-*",
+    "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+    "Microsoft.AspNet.Session": "1.0.0-*",
+    "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-*",
+    "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-*",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-*",
+    "Microsoft.Framework.Logging.Console": "1.0.0-*",
+    "EntityFramework7.Commands": "7.0.0-*",
+    "Newtonsoft.Json": "7.0.1-*",
+    "AutoMapper": "4.0.0-*",
+    "Thinktecture.IdentityServer3": "1.6.2",
+    "Microsoft.AspNet.Owin": "1.0.0-*",
+    "Microsoft.Owin": "3.0.1",
+
+    "Spa.Extensions": "1.0.0-beta6",
+    "Library": ""
+  },
+  "commands": {
+    "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",
+    
+  },
+  "scripts": {
+    "postrestore": [ "npm install" ],
+    "prepare": [ "grunt bower:install" ]
+  },
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+      }
     }
+    
+  }
 }

@@ -10,7 +10,7 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace Library.Spa.Apis {
-	[Route("api/book")]
+	[Route("book")]
 	public class BookApiController: Controller{
 		private readonly IBookService _bookService;
         private readonly IUserService _userService;
@@ -32,7 +32,7 @@ namespace Library.Spa.Apis {
             };
 		}
 
-        [Authorize("app-ManageStore")]
+        // [Authorize]
         [HttpGet("{bookId:int}")]
         [NoCache]
         public async Task<ApiResult> Details(int bookId)

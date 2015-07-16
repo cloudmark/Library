@@ -12,7 +12,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Library.Spa.Apis
 {
-    [Route("api/accounts")]
+    [Route("accounts")]
     public class AccountsApiController : Controller
     {
 
