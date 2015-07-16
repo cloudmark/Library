@@ -1,19 +1,21 @@
 {
-    "compilationOptions": {
-        "warningsAsErrors": true
-    },
-    "dependencies": {
-        "Microsoft.Framework.Logging": "1.0.0-*",
-        "Microsoft.Framework.Logging.Abstractions": "1.0.0-*",
-        "Microsoft.Framework.Logging.Testing": "1.0.0-*",
-        "xunit": "2.1.0-beta3-*",
-        "xunit.runner.dnx": "2.1.0-beta3-*"
-    },
-    "commands": {
-        "test": "xunit.runner.dnx"
-    },
-    "frameworks": {
-        "dnx451": { },
-        "dnxcore50": {}
-    }
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+  "dependencies": {
+    "Microsoft.Framework.Logging": "1.0.0-*",
+    "Microsoft.Framework.Logging.Abstractions": "1.0.0-*",
+    "Microsoft.Framework.Logging.Testing": "1.0.0-*",
+    "xunit": "2.1.0-*",
+    "xunit.runner.dnx": "2.1.0-*",
+    "xunit.runner.visualstudio": "2.1.0-*",
+    "Library.Spa": "1.0.0-*"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  }
 }
