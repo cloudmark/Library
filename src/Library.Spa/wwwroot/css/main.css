@@ -411,8 +411,18 @@
     padding: 15px 5px;
 }
 
+/********************/
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
     cursor: pointer;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: #FA787E;
+}
+
+.ng-valid.ng-dirty {
+    border-color: #78FA89;
 }
