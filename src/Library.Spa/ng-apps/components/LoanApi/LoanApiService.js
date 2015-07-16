@@ -45,7 +45,7 @@ var Library;
             };
             LoanApiService.prototype.endLoan = function (loanId) {
                 var url = this._urlResolver.resolveUrl("~/api/loan/" + loanId);
-                this._http.delete(url);
+                return this._http.delete(url).then(function (result) { return result.data; });
             };
             return LoanApiService;
         })();

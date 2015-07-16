@@ -15,7 +15,7 @@
         private userApi: Services.IUserApiService;
         private bookApi: Services.IBookApiService; 
         private loanApi: Services.ILoanApiService; 
-
+        private now: Date = new Date();
 
         public loans: Array<Models.ILoan> = [];
         public users: Array<Models.IUser> = []; 
@@ -52,7 +52,13 @@
         refreshLoans(): void {
             this.loanApi.getLoans().then(loans => {
                 this.loans.length = 0;
-                this.loans.push.apply(this.loans, loans);
+                loans.forEach(l => {
+                    l.LoanEnd = new Date(<string><any>l.LoanEnd);
+                    l.LoanStart = new Date(<string><any>l.LoanStart);
+                    this.loans.push(l);
+                });
+
+                
             });
         }
 
@@ -94,8 +100,15 @@
         }
 
         endLoan(loanId: number): void {
-            this.loanApi.endLoan(loanId);
-            this.refreshLoans();
+            this.loanApi.endLoan(loanId).then(() => {
+                this.now = new Date();
+                this.refreshLoans();
+            });
+
+        }
+
+        isPast(endDate: Date): boolean {
+            return endDate < this.now;
         }
     }
 }

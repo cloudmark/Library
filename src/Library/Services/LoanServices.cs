@@ -24,7 +24,7 @@ namespace Library.Services
         private readonly IBookService _bookService;
         private readonly IUserService _userService;
 
-        private readonly Expression<Func<Loan, bool>> _loanPredicate = l => l.LoanEnd <= DateTime.Now.AddDays(30);
+        private readonly Expression<Func<Loan, bool>> _loanPredicate = l => l.LoanEnd <= DateTime.UtcNow.AddDays(30);
 
         public LoanService(LibraryContext libraryContext, IBookService bookService, IUserService userService)
         {
@@ -65,7 +65,7 @@ namespace Library.Services
 
             if (b == null || u == null) throw null;
 
-            var currentDate = DateTime.Now;
+            var currentDate = DateTime.UtcNow;
             var loan = new Loan()
             {
                 Book = b,
@@ -83,7 +83,7 @@ namespace Library.Services
             var loan = await _libraryContext.Loans.Where(l => l.Id == loanId).SingleOrDefaultAsync();
             if (loan != null)
             {
-                loan.LoanEnd = DateTime.Now;
+                loan.LoanEnd = DateTime.UtcNow;
                 int rowsSaved = await _libraryContext.SaveChangesAsync();
                 return rowsSaved > 0;
             }

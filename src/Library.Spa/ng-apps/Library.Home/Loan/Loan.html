@@ -63,7 +63,7 @@
                             <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Surname}}</a></td>
                             <td>{{loan.LoanStart | date}}</td>
                             <td>{{loan.LoanEnd | date}}</td>
-                            <td><a ng-click="ctrl.endLoan(loan.User.Id)">Return</a></td>
+                            <td><a ng-click="ctrl.endLoan(loan.Id)" ng-hide="ctrl.isPast(loan.LoanEnd)">Return</a></td>
                         </tr>
                         </tbody>
                     </table>

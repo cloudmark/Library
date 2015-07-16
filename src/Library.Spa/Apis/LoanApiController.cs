@@ -21,7 +21,8 @@ namespace Library.Spa.Apis {
 		}
 
         [HttpGet]
-		public async Task<ApiResult> GetAll()
+        [NoCache]
+        public async Task<ApiResult> GetAll()
         {
             var loans = await this._loanService.AllWithDetails();
             return new ApiResult
@@ -49,6 +50,7 @@ namespace Library.Spa.Apis {
         }
 
         [HttpPost]
+        [NoCache]
         public async Task<ApiResult> LoanBook([FromBody]LoanChangeDto loanChangeDto)
         {
             if (!ModelState.IsValid)
@@ -65,6 +67,7 @@ namespace Library.Spa.Apis {
         }
 
         [HttpDelete("{loanId:int}")]
+        [NoCache]
         public async Task<ApiResult> ReturnBook(int loanId)
         {
             if (!ModelState.IsValid)
