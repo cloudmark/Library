@@ -10,9 +10,13 @@ using Library.Models;
 using AutoMapper;
 using Library.Services;
 using Library.Spa.Dtos;
+using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Authentication.Internal;
 using Microsoft.Framework.Configuration;
+using Microsoft.Framework.OptionsModel;
 using Microsoft.Framework.Runtime;
 using Spa.Extensions.Extenstions;
 
@@ -57,11 +61,14 @@ namespace Library.Spa
                     .AddEntityFrameworkStores<LibraryContext>()
                     .AddDefaultTokenProviders();
 
+//            services.AddAuthentication();
+//            services.AddAuthorization();
+             
             // Configure Auth
-//                        services.Configure<AuthorizationOptions>(options =>
-//                        {
-//                            options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
-//                        });
+            services.Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy("app-ManageStore", new AuthorizationPolicyBuilder().RequireClaim("app-ManageStore", "Allowed").Build());
+            });
 
             // Create the services
             services.AddScoped<IBookService, BookService>();
@@ -99,10 +106,15 @@ namespace Library.Spa
             // Add static files
             app.UseStaticFiles();
 
-            // Add MVC
-            app.UseMvc();
+            // Add cookie-based authentication to the request pipeline
+            app.UseCookieAuthentication(c => {
+                c.LoginPath = new PathString("/Account/Login");
+            });
 
             app.UseIdentity();
+
+            // Add MVC
+            app.UseMvc();
 
             // Add SPA
             app.UseSpa(new SpaOptions() {DebugMode = true}); 

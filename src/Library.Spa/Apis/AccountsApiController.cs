@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Library.Models;
 using Library.Spa.Infrastructure;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 
@@ -23,12 +24,12 @@ namespace Library.Spa.Apis
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ApiResult> Register([FromBody]RegisterViewModel model)
+        public async Task<ApiResult> Register([FromBody] RegisterViewModel model)
         {
             //Bug: https://github.com/aspnet/WebFx/issues/247
             //if (ModelState.IsValid == true)
             {
-                var user = new ApplicationUser { UserName = model.UserName };
+                var user = new ApplicationUser {UserName = model.UserName};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -43,6 +44,36 @@ namespace Library.Spa.Apis
                     Message = result.Errors.First().Description
                 };
             }
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<ApiResult> Login([FromBody] LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return new ApiResult() {Message = "Login Success"};
+                }
+                if (result.IsLockedOut)
+                {
+                    return new ApiResult
+                    {
+                        StatusCode = 501,
+                        Message = "User is locked out, try again later."
+                    };
+
+                }
+
+            }
+            return new ApiResult
+            {
+                StatusCode = 501,
+                Message = "Invalid username or password."
+            };
+
         }
     }
 }

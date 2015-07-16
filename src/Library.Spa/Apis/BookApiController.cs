@@ -6,6 +6,7 @@ using Library.Models;
 using Library.Services;
 using Library.Spa.Dtos;
 using Library.Spa.Infrastructure;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace Library.Spa.Apis {
@@ -30,8 +31,9 @@ namespace Library.Spa.Apis {
 		        Data = books.MapTo(b => Mapper.Map(b, new BookResultDto())),
             };
 		}
-		
-		[HttpGet("{bookId:int}")]
+
+        [Authorize("app-ManageStore")]
+        [HttpGet("{bookId:int}")]
         [NoCache]
         public async Task<ApiResult> Details(int bookId)
 		{
@@ -77,6 +79,7 @@ namespace Library.Spa.Apis {
             };
         }
 
+        
         [HttpPut("{bookId:int}")]
         public async Task<ApiResult> UpdateBook(int bookId, [FromBody]BookChangeDto bookDto)
         {
