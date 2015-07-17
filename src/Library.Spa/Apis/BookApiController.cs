@@ -53,7 +53,7 @@ namespace Library.Spa.Apis {
 
             foreach (var l in bookDetails.Loans)
             {
-                var user = await _userService.Details(l.BookId);
+                var user = await _userService.Details(l.UserId);
                 l.UserFullName = $"{user.Name} {user.Surname}";
                 l.BookName = book.Name;
             }
