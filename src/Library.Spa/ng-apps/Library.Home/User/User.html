@@ -12,7 +12,7 @@
                     <h5>Add User</h5>
                 </div>
                 <div class="panel-body">
-                    <form id="addUserForm" ng-submit="ctrl.addUser()" role="form" novalidate>
+                    <form name="addUserForm" ng-submit="addUserForm.$valid && ctrl.addUser()" role="form" novalidate>
                         <div class="form-group">
                             <label for="inputNameIdentifier">Name</label>
                             <input type="text" required data-ng-model="ctrl.currentUser.Name" class="form-control" id="inputNameIdentifier"
@@ -25,7 +25,7 @@
                         </div>
                         <div class="pull-right form-group">
                             <div>
-                                <button type="submit" class="btn btn-info">Add User</button>
+                                <button type="submit" ng-enabled="addUserForm.$valid" class="btn btn-info">Add User</button>
                             </div>
                         </div>
                     </form>
@@ -34,7 +34,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Users</h5>
+                    <h5>Users <span class="badge">{{ctrl.users.length}}</span></h5>
                 </div>
                 <div class="panel-body">
                     <div ng-hide="ctrl.users.length" class="alert" role="alert">
@@ -70,20 +70,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Filters</div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" novalidate>
                         <div class="form-group">
                             <label for="inputUserIdentifier">UserId</label>
                             <input type="text" data-ng-model="ctrl.filters.Id" class="form-control" id="inputUserIdentifier"
                                    placeholder="User Identifier">
                         </div>
                         <div class="form-group">
-                            <label for="inputNameIdentifier">Name</label>
-                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputNameIdentifier"
+                            <label for="inputSearchNameIdentifier">Name</label>
+                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputSearchNameIdentifier"
                                    placeholder="Name">
                         </div>
                         <div class="form-group">
-                            <label for="inputSurnameIdentifier">Surname</label>
-                            <input type="text" data-ng-model="ctrl.filters.Surname" class="form-control" id="inputSurnameIdentifier"
+                            <label for="inputSearchSurnameIdentifier">Surname</label>
+                            <input type="text" data-ng-model="ctrl.filters.Surname" class="form-control" id="inputSearchSurnameIdentifier"
                                    placeholder="Surname">
                         </div>
                         <div class="pull-right form-group">

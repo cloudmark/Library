@@ -32,7 +32,7 @@ namespace Library.Spa.Apis {
             };
 		}
 
-        // [Authorize]
+        [Authorize]
         [HttpGet("{bookId:int}")]
         [NoCache]
         public async Task<ApiResult> Details(int bookId)

@@ -1,6 +1,6 @@
 /// <reference path="../../references.ts" /> 
 
-module Library.Services {
+module Library.LoanApi {
 	export interface ILoanApiService {
         getLoans(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.ILoan>>;
         addLoan(book: Models.ILoanTrimmed): ng.IPromise<Models.ILoan>;

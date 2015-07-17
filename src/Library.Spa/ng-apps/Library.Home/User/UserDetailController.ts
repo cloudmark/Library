@@ -12,7 +12,7 @@
 
     class UserDetailController implements IUserDetailViewModel {
         private $scope: ng.IScope; 
-        private userApi: Services.IUserApiService; 
+        private userApi: UserApi.IUserApiService; 
         user: Models.IUser = {
             Id: 0,
             Name: "",
@@ -20,7 +20,7 @@
             Loans: []
         };
        
-        constructor($scope: ng.IScope, userApi: Services.IUserApiService, $routeParams: IUserParams) {
+        constructor($scope: ng.IScope, userApi: UserApi.IUserApiService, $routeParams: IUserParams) {
             this.$scope = $scope; 
             this.userApi = userApi;
             this.getUser($routeParams.userId);

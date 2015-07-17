@@ -57,6 +57,23 @@ namespace Library.Spa.Apis
             return apiResult; 
         }
 
+        [HttpPost]
+        public async Task<ApiResult> CreateUser([FromBody]UserChangeDto userDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new ApiResult(ModelState);
+            }
+
+            var user = new User();
+            await _userService.CreateUser(Mapper.Map(userDto, user));
+
+            return new ApiResult
+            {
+                Data = Mapper.Map(user, new UserDetailResultDto())
+            };
+        }
+
         [HttpPut("{userId:int}")]
         public async Task<ApiResult> UpdateUser(int userId, [FromBody]UserChangeDto userDto)
         {

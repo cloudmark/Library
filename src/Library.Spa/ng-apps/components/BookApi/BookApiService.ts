@@ -1,6 +1,6 @@
 /// <reference path="../../references.ts" /> 
 
-module Library.Services {
+module Library.BookApi {
 	export interface IBookApiService {
         getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>>;
         getBook(bookId: number): ng.IPromise<Models.IBook>;
@@ -13,15 +13,18 @@ module Library.Services {
         private _q: ng.IQService;
         private _http: ng.IHttpService;
         private _urlResolver: UrlResolver.IUrlResolverService;
+        private authApi: AuthApi.ILoginApiService; 
 
         constructor($cacheFactory: ng.ICacheFactoryService,
             $q: ng.IQService,
             $http: ng.IHttpService,
-            urlResolver: UrlResolver.IUrlResolverService) {
+            urlResolver: UrlResolver.IUrlResolverService,
+            authApi: AuthApi.ILoginApiService) {
             this._inlineData = $cacheFactory.get("inlineData");
             this._q = $q;
             this._http = $http;
             this._urlResolver = urlResolver;
+            this.authApi = authApi;
         }
 
         public getBooks(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IBook>> {
@@ -60,6 +63,7 @@ module Library.Services {
 
         public getBook(bookId: number): ng.IPromise<Models.IBook> {
             var url = this._urlResolver.resolveUrl("~/api/book/" + bookId);
+            this._http.defaults.headers.common['Authorization'] = 'Bearer ' + this.authApi.currentUser.Token;
             return this._http.get(url).then(result => result.data.Data);
         }
 

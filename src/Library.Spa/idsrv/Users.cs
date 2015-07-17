@@ -13,7 +13,7 @@ namespace Library.Spa.idsrv
                 {
                     Username = "testUser",
                     Password = "testPwd",
-                    Subject = "I am the Subject"
+                    Subject = "Test User"
                 }
            
             };

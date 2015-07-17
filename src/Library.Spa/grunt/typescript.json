@@ -2,8 +2,9 @@
     "options": {
         "module": "amd",
         "target": "es5",
-        "sourcemap": true, 
-        "generateTsConfig": true
+        "sourcemap": true,
+        "generateTsConfig": true,
+        "noEmitOnError":  false
     },
     "dev": {
         "files": [

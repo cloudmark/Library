@@ -12,14 +12,14 @@
                     <h5>Add Loan</h5>
                 </div>
                 <div class="panel-body">
-                    <form id="addFormLoan" ng-submit="ctrl.addLoan()" role="form" novalidate>
+                    <form name="addFormLoan" ng-submit="addFormLoan.$valid && ctrl.addLoan()" role="form" novalidate>
                         <div class="form-group">
                             <label for="inputBookIdentifier">Book</label>
-                            <select ng-model="ctrl.currentLoan.BookId" ng-options="b.Id as b.Name for b in ctrl.books"></select>
+                            <select id="inputBookIdentifier" ng-model="ctrl.currentLoan.BookId" ng-options="b.Id as b.Name for b in ctrl.books"></select>
                         </div>
                         <div class="form-group">
                             <label for="inputUserIdentifier">User</label>
-                            <select ng-model="ctrl.currentLoan.UserId" ng-options="u.Id as u.Name for u in ctrl.users"></select>
+                            <select id="inputUserIdentifier" ng-model="ctrl.currentLoan.UserId" ng-options="u.Id as u.Name for u in ctrl.users"></select>
                         </div>
                         <div class="form-group">
                             <label for="inputDays">Days</label>
@@ -27,7 +27,7 @@
                         </div>
                         <div class="pull-right form-group">
                             <div>
-                                <button type="submit" class="btn btn-info">Add Loan</button>
+                                <button type="submit" ng-enabled="addFormLoan.$valid" class="btn btn-info">Add Loan</button>
                             </div>
                         </div>
                     </form>
@@ -36,7 +36,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Loans</h5>
+                    <h5>Loans <span class="badge">{{ctrl.loans.length}}</span></h5>
                 </div>
                 <div class="panel-body">
                     <div ng-hide="ctrl.loans.length" class="alert" role="alert">
@@ -79,25 +79,25 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Filters</div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" novalidate>
                         <div class="form-group">
-                            <label for="loanIdFilterField">Loan Identifier</label>
-                            <input type="text"  class="form-control" id="loanIdFilterField" data-ng-model="ctrl.filters.Id"
+                            <label for="searchLoanIdFilterField">Loan Identifier</label>
+                            <input type="text"  class="form-control" id="searchLoanIdFilterField" data-ng-model="ctrl.filters.Id"
                                    placeholder="Loan Identifier">
                         </div>
                         <div class="form-group">
-                            <label for="bookNameFilterField">Book Name</label>
-                            <input type="text" class="form-control" id="bookNameFilterField" data-ng-model="ctrl.filters.BookName"
+                            <label for="searchBookNameFilterField">Book Name</label>
+                            <input type="text" class="form-control" id="searchBookNameFilterField" data-ng-model="ctrl.filters.BookName"
                                    placeholder="Book Name">
                         </div>
                         <div class="form-group">
-                            <label for="userNameFilterField">User Name</label>
-                            <input type="text" class="form-control" id="userNameFilterField" data-ng-model="ctrl.filters.UserName"
+                            <label for="searchUserNameFilterField">User Name</label>
+                            <input type="text" class="form-control" id="searchUserNameFilterField" data-ng-model="ctrl.filters.UserName"
                                    placeholder="User Name">
                         </div>
                         <div class="form-group">
-                            <label for="userSurnameFilterField">User Surname</label>
-                            <input type="text" class="form-control" id="userSurnameFilterField" data-ng-model="ctrl.filters.UserSurname"
+                            <label for="searchUserSurnameFilterField">User Surname</label>
+                            <input type="text" class="form-control" id="searchUserSurnameFilterField" data-ng-model="ctrl.filters.UserSurname"
                                    placeholder="User Surname">
                         </div>
                         <div class="pull-right form-group">

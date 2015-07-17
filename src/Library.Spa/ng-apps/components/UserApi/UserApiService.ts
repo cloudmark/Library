@@ -1,6 +1,6 @@
 /// <reference path="../../references.ts" /> 
 
-module Library.Services {
+module Library.UserApi {
 	export interface IUserApiService {
         getUsers(page?: number, pageSize?: number, sortBy?: string): ng.IPromise<Array<Models.IUser>>;
         addUser(user: Models.IUser): ng.IPromise<Models.IUser>;

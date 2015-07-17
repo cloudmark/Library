@@ -3,13 +3,16 @@
         "out": "wwwroot/js/Library.Home.js",
         "target": "ES5",
         "module": "amd",
-        "noEmitOnError": true
+        "noEmitOnError": false
     },
     "files": [
+        "ng-apps/components/AuthApi/LoginApiService.ng.ts",
+        "ng-apps/components/Base64/Base64.ng.ts",
         "ng-apps/components/BookApi/BookApiService.ng.ts",
         "ng-apps/components/LoanApi/LoanApiService.ng.ts",
         "ng-apps/components/Models/IBook.ng.ts",
         "ng-apps/components/Models/ILoan.ng.ts",
+        "ng-apps/components/Models/ILogin.ng.ts",
         "ng-apps/components/Models/IPagedList.ng.ts",
         "ng-apps/components/Models/IUser.ng.ts",
         "ng-apps/components/UrlResolver/UrlResolverService.ng.ts",
@@ -19,6 +22,8 @@
         "ng-apps/Library.Home/Home/HomeController.ng.ts",
         "ng-apps/Library.Home/Library.Home.app.ng.ts",
         "ng-apps/Library.Home/Loan/LoanController.ng.ts",
+        "ng-apps/Library.Home/Login/LoginController.ng.ts",
+        "ng-apps/Library.Home/Shell/ShellController.ng.ts",
         "ng-apps/Library.Home/User/UserController.ng.ts",
         "ng-apps/Library.Home/User/UserDetailController.ng.ts"
     ]

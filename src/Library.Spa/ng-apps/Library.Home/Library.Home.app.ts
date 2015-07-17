@@ -2,8 +2,14 @@
 module Library.Home {
     var dependencies = [
         "ngRoute",
+        Library.Base64,
         Library.UrlResolver,
-        Library.Services,
+        Library.AuthApi,
+        Library.BookApi,
+        Library.LoanApi,
+        Library.UserApi,
+        Library.Home.Shell,
+        Library.Home.Login,
         Library.Home.Home,
         Library.Home.User,
         Library.Home.Loan,
@@ -23,6 +29,12 @@ module Library.Home {
             controller: "Library.Home.Home.HomeController",
             controllerAs: "ctrl",
             access: { requiresLogin: true }
+        })
+            .when("/login", {
+            templateUrl: "ng-apps/Library.Home/Login/Login.html",
+            controller: "Library.Home.Login.LoginController",
+            controllerAs: "ctrl",
+            access: { requiresLogin: false }
         })
             .when("/book", {
             templateUrl: "ng-apps/Library.Home/Book/Book.html",
@@ -57,12 +69,25 @@ module Library.Home {
     }
 
     // Use this method to register work which should be performed when the injector is done loading all modules.
-    function run($log: ng.ILogService, bookService: Services.IBookApiService) {
+    function run($rootScope: ng.IRootScopeService, $location: ng.ILocationService, $log: ng.ILogService, authService: AuthApi.ILoginApiService) {
         $('#menu-toggle').click((e) => {
             e.preventDefault();
             $('#wrapper').toggleClass('toggled');
         });
 
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            if (next.$$route.access && next.$$route.access.requiresLogin) {
+                authService.isLoggedIn(() => {
+                    $location.path("/login");
+                }).then(() => {
+                    return;
+                },() => {
+                    $location.path("/login");
+                });
+            } else {
+                return;
+            }
+        });
 
     }
 }

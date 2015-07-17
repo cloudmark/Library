@@ -4,12 +4,12 @@
         users: Array<Models.IUser>;
         refreshUsers(): void;
         clearFilters(): void;
-        addUsers(): void;
+        addUser(): void;
     }
 
     class UserController implements IUserViewModel {
         private $scope: ng.IScope;
-        private userApi: Services.IUserApiService;
+        private userApi: UserApi.IUserApiService;
 
 
         public users: Array<Models.IUser> = [];
@@ -25,7 +25,7 @@
             Loans: []
         };
 
-        constructor($scope: ng.IScope, userApi: Services.IUserApiService) {
+        constructor($scope: ng.IScope, userApi: UserApi.IUserApiService) {
             this.$scope = $scope;
             this.userApi = userApi;
             this.refreshUsers();
@@ -44,7 +44,7 @@
             this.filters.Surname = "";
         }
 
-        addUsers(): void {
+        addUser(): void {
             this.userApi.addUser(this.currentUser).then(user => {
                 this.currentUser = {
                     Id: -1,

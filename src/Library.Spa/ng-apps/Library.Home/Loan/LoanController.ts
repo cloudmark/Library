@@ -12,9 +12,9 @@
 
     class LoanController implements ILoanViewModel {
         private $scope: ng.IScope;
-        private userApi: Services.IUserApiService;
-        private bookApi: Services.IBookApiService; 
-        private loanApi: Services.ILoanApiService; 
+        private userApi: UserApi.IUserApiService;
+        private bookApi: BookApi.IBookApiService; 
+        private loanApi: LoanApi.ILoanApiService; 
         private now: Date = new Date();
 
         public loans: Array<Models.ILoan> = [];
@@ -36,9 +36,9 @@
         };
 
         constructor($scope: ng.IScope,
-                    loanApi: Services.ILoanApiService, 
-                    userApi: Services.IUserApiService,
-                    bookApi: Services.IBookApiService) {
+                    loanApi: LoanApi.ILoanApiService, 
+                    userApi: UserApi.IUserApiService,
+                    bookApi: BookApi.IBookApiService) {
             this.$scope = $scope;
             this.userApi = userApi;
             this.loanApi = loanApi;

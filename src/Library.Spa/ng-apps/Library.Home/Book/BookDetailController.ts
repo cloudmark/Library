@@ -12,7 +12,7 @@
 
     class BookDetailController implements IBookDetailViewModel  {
         private $scope: ng.IScope; 
-        private bookApi: Services.IBookApiService; 
+        private bookApi: BookApi.IBookApiService; 
         book: Models.IBook = {
             Id: 0,
             Name: "",
@@ -21,7 +21,7 @@
         };
         private $routeParams: ng.route.IRouteParamsService; 
        
-        constructor($scope: ng.IScope, bookApi: Services.IBookApiService, $routeParams: IBookParams) {
+        constructor($scope: ng.IScope, bookApi: BookApi.IBookApiService, $routeParams: IBookParams) {
             this.$scope = $scope;
             this.$routeParams = $routeParams; 
             this.bookApi = bookApi;
