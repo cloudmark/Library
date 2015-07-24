@@ -29,7 +29,7 @@ namespace Library.Spa.Apis
             //Bug: https://github.com/aspnet/WebFx/issues/247
             //if (ModelState.IsValid == true)
             {
-                var user = new ApplicationUser {UserName = model.UserName};
+                var user = new ApplicationUser { UserName = model.UserName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -55,7 +55,8 @@ namespace Library.Spa.Apis
                 var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return new ApiResult() {Message = "Login Success"};
+                    return new ApiResult() { Message = "Login Success" };
+
                 }
                 if (result.IsLockedOut)
                 {

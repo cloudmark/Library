@@ -1,4 +1,9 @@
 {
-    "projects": [ "src"
-     ]
+    "projects": [ "src", "test"],
+    "sdk": {
+    	"version": "1.0.0-beta6-12232",
+    	"runtime": "clr",
+    	"architecture": "x86"
+  	}
+   
 }

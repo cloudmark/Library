@@ -42,17 +42,17 @@ namespace Library.Spa
                 settings.DefaultAdminPassword = Configuration.Get("DefaultAdminPassword");
             });
 
-            
-            
+
+
             // Add the Mvc
             services.AddMvc();
-            
+
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<LibraryContext>(options =>
                 {
-                        Console.WriteLine("Detected Windows Runtime. ");
-                        options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString"));
+                    Console.WriteLine("Detected Windows Runtime. ");
+                    options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString"));
                 });
 
             // Add Identity services to the services container
@@ -62,7 +62,7 @@ namespace Library.Spa
 
             services.AddAuthentication();
             services.AddAuthorization();
-             
+
             // Configure Auth
             services.Configure<AuthorizationOptions>(options =>
             {
@@ -76,7 +76,7 @@ namespace Library.Spa
 
             // Configure the mapper
             Mapper.CreateMap<Book, BookResultDto>();
-            Mapper.CreateMap<Book, BookDetailedResultDto>(); 
+            Mapper.CreateMap<Book, BookDetailedResultDto>();
             Mapper.CreateMap<BookChangeDto, Book>();
             Mapper.CreateMap<User, UserResultDto>();
             Mapper.CreateMap<User, UserDetailResultDto>();
@@ -88,13 +88,13 @@ namespace Library.Spa
 
         }
 
-        public void Configure(IApplicationBuilder app, IApplicationEnvironment env )
+        public void Configure(IApplicationBuilder app, IApplicationEnvironment env)
         {
 
             // Add the runtime information page that can be used by developers
             // to see what packages are used by the application
             // default path is: /runtimeinfo
-            // app.UseRuntimeInfoPage();
+            app.UseRuntimeInfoPage();
 
             // Show all errors; 
             app.UseErrorPage();
@@ -150,7 +150,8 @@ namespace Library.Spa
                     options.AutomaticAuthentication = true;
                     options.Authority = Constants.AuthorizationUrl;
                     // options.MetadataAddress = Constants.AuthorizationUrl + "/.well-known/openid-configuration";
-                    options.TokenValidationParameters = new TokenValidationParameters{
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
                         ValidAudience = "https://idsrv3.com/resources",
                         ValidateLifetime = false
                     };
@@ -160,10 +161,10 @@ namespace Library.Spa
 
             });
 
-            
+
 
             // Add SPA
-            app.UseSpa(new SpaOptions() { DebugMode = true });
+             app.UseSpa(new SpaOptions() { DebugMode = true });
 
 
 
@@ -171,4 +172,3 @@ namespace Library.Spa
     }
 
 }
-

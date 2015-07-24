@@ -1,20 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using Library.Spa;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Relational;
-using Microsoft.Data.Entity.SqlServer;
-using Microsoft.Data.Entity.Storage;
-using Microsoft.Framework.DependencyInjection;
-
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Storage;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.OptionsModel;
 
