@@ -9,7 +9,7 @@
 
     class BookController implements IBookViewModel {
         private $scope: ng.IScope; 
-        private bookApi: Services.IBookApiService; 
+        private bookApi: BookApi.IBookApiService; 
         public books: Array<Models.IBook> = [];
         public filters = {
             Id: "",
@@ -19,10 +19,11 @@
         public currentBook: Models.IBook = {
             Id: -1,
             Name: "",
-            Description: ""
+            Description: "",
+            Loans: []
         };
 
-        constructor($scope: ng.IScope, bookApi: Services.IBookApiService) {
+        constructor($scope: ng.IScope, bookApi: BookApi.IBookApiService) {
             this.$scope = $scope; 
             this.bookApi = bookApi;
             this.refreshBooks();
@@ -46,11 +47,11 @@
                 this.currentBook = {
                     Id: -1,
                     Name: "",
-                    Description: ""
+                    Description: "",
+                    Loans: []
                 };
                 this.books.push(book);
             });
         }
-    
     }
 }

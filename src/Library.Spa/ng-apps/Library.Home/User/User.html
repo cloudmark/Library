@@ -4,9 +4,96 @@
         <li class="active">Users</li>
     </ol>
 </section>
-<div class="row">
-    <div class="col-md-12">
-        <p>User</p>
-        <a href="#/">Back </a>
+<section class="content">
+    <div ng-class="row">
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Add User</h5>
+                </div>
+                <div class="panel-body">
+                    <form name="addUserForm" ng-submit="addUserForm.$valid && ctrl.addUser()" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="inputNameIdentifier">Name</label>
+                            <input type="text" required data-ng-model="ctrl.currentUser.Name" class="form-control" id="inputNameIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSurnameIdentifier">Description</label>
+                            <input type="text" required data-ng-model="ctrl.currentUser.Surname" class="form-control" id="inputSurnameIdentifier"
+                                   placeholder="Surname">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button type="submit" ng-enabled="addUserForm.$valid" class="btn btn-info">Add User</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Users <span class="badge">{{ctrl.users.length}}</span></h5>
+                </div>
+                <div class="panel-body">
+                    <div ng-hide="ctrl.users.length" class="alert" role="alert">
+                        No Results for your Query. <a ng-click="ctrl.clearFilters()" class="alert-link">Clear Results</a> and try again?
+                    </div>
+                    <table ng-show="ctrl.users.length" class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in filteredUsers = (ctrl.users | filter: {Id: ctrl.filters.Id, Name: ctrl.filters.Name, Surname: ctrl.filters.Surname}) track by user.Id">
+
+                                <td><a ng-href="/#/user/{{user.Id}}">/{{user.Id}}</a></td>
+                                <td>{{user.Name}}</td>
+                                <td>{{user.Surname}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-primary btn-large btn-block btn" data-ng-click="ctrl.refreshUsers()">Refresh</div>
+            <div class="span3">&nbsp;</div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filters</div>
+                <div class="panel-body">
+                    <form role="form" novalidate>
+                        <div class="form-group">
+                            <label for="inputUserIdentifier">UserId</label>
+                            <input type="text" data-ng-model="ctrl.filters.Id" class="form-control" id="inputUserIdentifier"
+                                   placeholder="User Identifier">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSearchNameIdentifier">Name</label>
+                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputSearchNameIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSearchSurnameIdentifier">Surname</label>
+                            <input type="text" data-ng-model="ctrl.filters.Surname" class="form-control" id="inputSearchSurnameIdentifier"
+                                   placeholder="Surname">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button data-ng-click="ctrl.clearFilters()" type="submit" class="btn btn-info">Clear Filters</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>

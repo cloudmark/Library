@@ -26,39 +26,39 @@
         ]
     },
     "dependencies": {
-        "Kestrel": "1.0.0-*",
-        "Microsoft.AspNet.Authentication.Cookies": "1.0.0-*",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
-        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-*",
-        "Microsoft.AspNet.Mvc": "6.0.0-*",
-        "Microsoft.AspNet.Server.IIS": "1.0.0-*",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
-        "Microsoft.AspNet.Session": "1.0.0-*",
-        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-*",
-        "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-*",
-        "Microsoft.Framework.Configuration.Json": "1.0.0-*",
-        "Microsoft.Framework.Logging.Console": "1.0.0-*",
-        "EntityFramework.Commands": "7.0.0-*",
-        "Newtonsoft.Json": "7.0.1-*",
+        "Kestrel": "1.0.0-beta6-*",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-beta6-*",
+        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta6-*",
+        "Microsoft.AspNet.Mvc": "6.0.0-beta6-*",
+        "Microsoft.AspNet.Http":  "1.0.0-beta6-*",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta6-*",
+        "Microsoft.AspNet.Authorization": "1.0.0-beta6-*",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-beta6-*",
         "AutoMapper": "4.0.0-*",
+        "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta6-*",
+        "Microsoft.Framework.Configuration": "1.0.0-beta6-*",
+        "Microsoft.Framework.Configuration.Json": "1.0.0-beta6-*",
+        "Newtonsoft.Json": "7.0.1",
         "Spa.Extensions": "1.0.0-beta6",
-        "Library": ""
+        "Library": "",
+    
+        "Microsoft.AspNet.Hosting": "1.0.0-beta6-*",
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta6-*",
+        "Microsoft.AspNet.Session": "1.0.0-beta6-*",
+        "Microsoft.Framework.Logging.Console": "1.0.0-beta6-*",
+        "Microsoft.IdentityModel.Protocol.Extensions": "2.0.0-beta6-*",
+        "Microsoft.AspNet.Authentication.OAuthBearer": "1.0.0-beta6-*",
+
+        "Thinktecture.IdentityServer3": "1.6.2",
+        "Microsoft.AspNet.Owin": "1.0.0-*",
+        "Microsoft.Owin": "3.0.1"
     },
     "commands": {
-        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5001",
-        "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5004"
+        "WebListener": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5102",
+        "Kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:50371",
+        "run": "run server.urls=http://localhost:5103"
     },
-    "scripts": {
-        "postrestore": [ "npm install" ],
-        "prepare": [ "grunt bower:install" ]
-    },
-    "frameworks": {
-        "dnx451": {
-            "dependencies": {}
-        },
-        "dnxcore50": {
-            "dependencies": {}
-        }
+  "frameworks": {
+    "dnx451": {}
     }
 }

@@ -16,13 +16,13 @@ namespace Library.Spa.Dtos {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<LoanResultDto> Loans { get; set; } = new List<LoanResultDto>();
+        public List<LoanResultDto> Loans { get; set; }
     }
 
     [ModelMetadataType(typeof(Book))]
-    public class BookChangeDto {
-        
-		public string Name {get; set; }
+    public class BookChangeDto
+    {
+        public string Name {get; set; }
 		public string Description {get; set;}
 	}
 	

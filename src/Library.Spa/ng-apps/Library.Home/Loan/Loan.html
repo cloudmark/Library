@@ -4,9 +4,110 @@
         <li class="active">Loans</li>
     </ol>
 </section>
-<div class="row">
-    <div class="col-md-12">
-        <p>Loan</p>
-        <a href="#/">Back </a>
+<section class="content">
+    <div ng-class="row">
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Add Loan</h5>
+                </div>
+                <div class="panel-body">
+                    <form name="addFormLoan" ng-submit="addFormLoan.$valid && ctrl.addLoan()" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="inputBookIdentifier">Book</label>
+                            <select id="inputBookIdentifier" ng-model="ctrl.currentLoan.BookId" ng-options="b.Id as b.Name for b in ctrl.books"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputUserIdentifier">User</label>
+                            <select id="inputUserIdentifier" ng-model="ctrl.currentLoan.UserId" ng-options="u.Id as u.Name for u in ctrl.users"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDays">Days</label>
+                            <input type="number" min="1" max="20" required data-ng-model="ctrl.currentLoan.Days" class="form-control" id="inputDays"/>
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button type="submit" ng-enabled="addFormLoan.$valid" class="btn btn-info">Add Loan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Loans <span class="badge">{{ctrl.loans.length}}</span></h5>
+                </div>
+                <div class="panel-body">
+                    <div ng-hide="ctrl.loans.length" class="alert" role="alert">
+                        No Results for your Query. <a ng-click="ctrl.clearFilters()" class="alert-link">Clear Results</a> and try again?
+                    </div>
+                    <table ng-show="ctrl.loans.length" class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Book Name</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Start</th>
+                                <th>End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+<!--                            (ctrl.users | filter: {Id: ctrl.filters.Id, Name: ctrl.filters.Name, Surname: ctrl.filters.Surname}) track by user.Id-->
+                        <tr ng-repeat="loan in filteredLoans = (ctrl.loans | filter: {Id: ctrl.filters.Id, Book:{Name: ctrl.filters.BookName}, User:{Name: ctrl.filters.UserName, Surname: ctrl.filters.UserSurname}}) track by loan.Id">
+
+                            <td><a ng-href="/#/loan/{{loan.Id}}">/{{loan.Id}}</a></td>
+                            <td><a ng-href="/#/book/{{loan.Book.Id}}">{{loan.Book.Name}}</a></td>
+                            <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Name}}</a></td>
+                            <td><a ng-href="/#/user/{{loan.User.Id}}">{{loan.User.Surname}}</a></td>
+                            <td>{{loan.LoanStart | date}}</td>
+                            <td>{{loan.LoanEnd | date}}</td>
+                            <td><a ng-click="ctrl.endLoan(loan.Id)" ng-hide="ctrl.isPast(loan.LoanEnd)">Return</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="btn btn-primary btn-large btn-block btn" data-ng-click="ctrl.refreshLoans()">Refresh</div>
+            <div class="span3">&nbsp;</div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filters</div>
+                <div class="panel-body">
+                    <form role="form" novalidate>
+                        <div class="form-group">
+                            <label for="searchLoanIdFilterField">Loan Identifier</label>
+                            <input type="text"  class="form-control" id="searchLoanIdFilterField" data-ng-model="ctrl.filters.Id"
+                                   placeholder="Loan Identifier">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchBookNameFilterField">Book Name</label>
+                            <input type="text" class="form-control" id="searchBookNameFilterField" data-ng-model="ctrl.filters.BookName"
+                                   placeholder="Book Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchUserNameFilterField">User Name</label>
+                            <input type="text" class="form-control" id="searchUserNameFilterField" data-ng-model="ctrl.filters.UserName"
+                                   placeholder="User Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchUserSurnameFilterField">User Surname</label>
+                            <input type="text" class="form-control" id="searchUserSurnameFilterField" data-ng-model="ctrl.filters.UserSurname"
+                                   placeholder="User Surname">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button data-ng-click="ctrl.clearFilters()" type="submit" class="btn btn-info">Clear Filters</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>

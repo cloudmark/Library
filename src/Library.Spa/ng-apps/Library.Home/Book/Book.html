@@ -5,20 +5,14 @@
     </ol>
 </section>
 <section class="content">
-    <div ng-show="loading()" class="alert alert-info" role="alert">Loading Sessions...</div>
-    <div ng-show="error()" class="alert alert-danger" role="alert">
-        Error Connecting. Do you want to <a ng-click="updateSessions()" class="alert-link">retry?</a>
-    </div>
-
-    <div ng-show="!ctrl.loading() && !ctrl.error()" class="row">
+    <div class="row">
         <div class="col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5>Request Book</h5>
                 </div>
                 <div class="panel-body">
-                    {{requestBookForm.$valid}}
-                    <form id="requestBookForm" ng-submit="ctrl.requestBook()" role="form" novalidate>
+                    <form name="requestBookForm" ng-submit="requestBookForm.$valid && ctrl.requestBook()" role="form" novalidate>
                         <div class="form-group">
                             <label for="inputNameIdentifier">Name</label>
                             <input type="text" required data-ng-model="ctrl.currentBook.Name" class="form-control" id="inputNameIdentifier"
@@ -31,7 +25,7 @@
                         </div>
                         <div class="pull-right form-group">
                             <div>
-                                <button type="submit" class="btn btn-info">Request</button>
+                                <button type="submit" ng-enabled="requestBookForm.$valid" class="btn btn-info">Add Book</button>
                             </div>
                         </div>
                     </form>
@@ -39,7 +33,7 @@
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h5>Available Books</h5>
+                <div class="panel-heading"><h5>Available Books  <span class="badge">{{ctrl.books.length}}</span></h5>
                 </div>
                 <div class="panel-body">
                     <div ng-hide="ctrl.books.length" class="alert" role="alert">
@@ -75,20 +69,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Filters</div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" novalidate>
                         <div class="form-group">
                             <label for="inputBookIdentifier">BookId</label>
                             <input type="text" data-ng-model="ctrl.filters.Id" class="form-control" id="inputBookIdentifier"
                                    placeholder="Book Identifier">
                         </div>
                         <div class="form-group">
-                            <label for="inputNameIdentifier">Name</label>
-                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputNameIdentifier"
+                            <label for="inputSearchNameIdentifier">Name</label>
+                            <input type="text" data-ng-model="ctrl.filters.Name" class="form-control" id="inputSearchNameIdentifier"
                                    placeholder="Name">
                         </div>
                         <div class="form-group">
-                            <label for="inputDescriptionIdentifier">Description</label>
-                            <input type="text" data-ng-model="ctrl.filters.Description" class="form-control" id="inputDescriptionIdentifier"
+                            <label for="inputSearchDescriptionIdentifier">Description</label>
+                            <input type="text" data-ng-model="ctrl.filters.Description" class="form-control" id="inputSearchDescriptionIdentifier"
                                    placeholder="Description">
                         </div>
                         <div class="pull-right form-group">

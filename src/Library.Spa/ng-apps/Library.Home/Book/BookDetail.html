@@ -1,0 +1,66 @@
+﻿<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/book/">Books</a></li>
+        <li class="active">{{ctrl.book.Id}}</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Book {{ctrl.book.Id}}</h5>
+                </div>
+                <div class="panel-body">
+                    <form id="requestBookForm" ng-submit="ctrl.updateBook()" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="inputNameIdentifier">Name</label>
+                            <input type="text" required data-ng-model="ctrl.book.Name" class="form-control" id="inputNameIdentifier"
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDescriptionIdentifier">Description</label>
+                            <input type="text" required data-ng-model="ctrl.book.Description" class="form-control" id="inputDescriptionIdentifier"
+                                   placeholder="Description">
+                        </div>
+                        <div class="pull-right form-group">
+                            <div>
+                                <button type="submit" class="btn btn-info">Update Book</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default" ng-show="ctrl.book.Loans.length">
+                <div class="panel-heading">
+                    <h5>Loans of Book {{ctrl.book.Id}}</h5>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>UserId</th>
+                                <th>Start</th>
+                                <th>End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="loan in ctrl.book.Loans">
+                                <td><a ng-href="/#/loan/{{loan.Id}}">{{loan.Id}}</a></td>
+                                <td><a ng-href="/#/user/{{loan.UserId}}">{{loan.UserFullName}}</a></td>
+                                <td>{{loan.LoanStart | date}}</td>
+                                <td>{{loan.LoanEnd | date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

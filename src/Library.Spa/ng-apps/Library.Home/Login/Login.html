@@ -1,0 +1,34 @@
+﻿<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li class="active">Login</li>
+    </ol>
+</section>
+<section class="content">
+    <div ng-class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Login</h5>
+            </div>
+            <div class="panel-body">
+                <form id="requestBookForm" ng-submit="ctrl.login()" role="form" novalidate>
+                    <div class="form-group">
+                        <label for="inputUsernameIdentifier">Name</label>
+                        <input type="text" required data-ng-model="ctrl.currentUser.Username" class="form-control" id="inputUsernameIdentifier"
+                               placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPasswordIdentifier">Description</label>
+                        <input type="password" required data-ng-model="ctrl.currentUser.Password" class="form-control" id="inputPasswordIdentifier"
+                               placeholder="Password">
+                    </div>
+                    <div class="pull-right form-group">
+                        <div>
+                            <button type="submit" class="btn btn-info">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

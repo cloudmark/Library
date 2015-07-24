@@ -40,7 +40,10 @@ namespace Library.Services
 
         public async Task<Book> Details(int bookId)
         {
-            return await _libraryContext.Books.Where(b => b.Id == bookId).SingleOrDefaultAsync();
+            return await _libraryContext.Books
+                .Include(b => b.Loans)
+                .Where(b => b.Id == bookId)
+                .SingleOrDefaultAsync();
         }
 
         public async Task Update(Book b)
